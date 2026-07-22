@@ -121,15 +121,6 @@
   .strategy-list li:last-child{margin-bottom:0}
   .strategy-list strong{color:var(--ink)}
 
-  .placeholder-media{position:relative;border-radius:var(--radius);overflow:hidden;background:
-    linear-gradient(140deg,var(--verde-600),var(--verde-900));min-height:230px;display:grid;place-items:center;color:rgba(255,255,255,.85)}
-  .placeholder-media.rasp{background:linear-gradient(140deg,var(--framboesa),var(--framboesa-escuro))}
-  .placeholder-media.field{background:linear-gradient(140deg,#5c7d4a,#2c4a26)}
-  .placeholder-media.framboesa{background-image:var(--img-framboesa);background-size:cover;background-position:center}
-  .placeholder-media.amora{background-image:var(--img-amora);background-size:cover;background-position:center}
-  .placeholder-media span{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;background:rgba(0,0,0,.25);padding:6px 14px;border-radius:99px}
-  .placeholder-media svg{position:absolute;inset:0;width:100%;height:100%;opacity:.15}
-
   /* ---------- socios ---------- */
   .socio{text-align:center}
   .socio .avatar{width:110px;height:110px;border-radius:50%;margin:0 auto 16px;background:linear-gradient(140deg,var(--verde-100),#cfe0d3);display:grid;place-items:center;color:var(--verde-600);font-family:var(--serif);font-size:2rem;font-weight:700;border:4px solid #fff;box-shadow:var(--shadow);overflow:hidden}
@@ -174,7 +165,7 @@
   .chip{border:1.5px solid var(--verde-600);background:transparent;color:var(--verde-800);padding:8px 20px;border-radius:99px;font-weight:600;font-size:.88rem;cursor:pointer;transition:.2s;font-family:var(--sans)}
   .chip.active,.chip:hover{background:var(--verde-800);border-color:var(--verde-800);color:#fff}
   .var-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
-  .var-card{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;background:var(--branco);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .2s, box-shadow .2s;border:none;text-align:left;font-family:var(--sans);padding:0}
+  .var-card{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;background:var(--branco);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform .2s, box-shadow .2s}
   .var-card .var-thumb{flex-shrink:0}
   .var-card .var-body{display:flex;flex-direction:column;align-items:flex-start;flex:1}
   .var-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,48,31,.16)}
@@ -189,16 +180,7 @@
   .tag.amora{background:#ece4f2;color:var(--amora)}
   .tag.outra{background:#eceadf;color:#6b6a54}
   .var-body p{color:var(--ink-soft);font-size:.9rem;margin-top:6px}
-  .var-more{margin-top:14px;font-weight:600;color:var(--framboesa);font-size:.85rem}
-
-  /* variety detail */
-  .var-detail-head{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
-  @media(max-width:820px){.var-detail-head{grid-template-columns:1fr}}
-  .char-table{width:100%;border-collapse:collapse;margin-top:8px;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-  .char-table th,.char-table td{padding:14px 18px;text-align:left;font-size:.93rem}
-  .char-table th{width:40%;color:var(--verde-800);font-weight:600;background:var(--verde-100)}
-  .char-table tr:not(:last-child) td,.char-table tr:not(:last-child) th{border-bottom:1px solid #eee7d8}
-  .back-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;color:var(--verde-600);margin-bottom:22px}
+  .var-more{margin-top:14px;font-weight:600;color:var(--framboesa);font-size:.85rem;display:inline-block;text-decoration:none}
 
   /* ---------- map ---------- */
   .map-wrap{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(22,48,31,.08)}
@@ -585,7 +567,7 @@
       <div class="breadcrumb"><a href="#/pt/" data-route="/" data-i18n="nav.home">Início</a> / <span data-i18n="nav.variedades">Variedades</span></div>
       <span class="eyebrow" data-i18n="var.eyebrow">As Nossas Variedades</span>
       <h1 data-i18n="var.h1">Variedades selecionadas pela força, produtividade e sabor</h1>
-      <p data-i18n="var.lead">Trabalhamos com variedades licenciadas de referência internacional, adequadas tanto a pequenas explorações como à produção em larga escala. Clique numa variedade para ver a ficha completa.</p>
+      <p data-i18n="var.lead">Trabalhamos com variedades licenciadas de referência internacional, adequadas tanto a pequenas explorações como à produção em larga escala. Veja os detalhes de cada variedade no site do respetivo obtentor.</p>
     </div>
   </div>
   <section class="block">
@@ -597,13 +579,6 @@
       </div>
       <div class="var-grid" id="var-grid"></div>
     </div>
-  </section>
-</div>
-
-<!-- ================= VARIEDADE DETALHE ================= -->
-<div class="page" id="page-variedade-detalhe">
-  <section class="block" style="padding-top:48px">
-    <div class="container" id="var-detail-container"></div>
   </section>
 </div>
 
@@ -750,175 +725,94 @@ function carouselGo(wrap, idx){
 const LANGS = ['pt','en','fr'];
 let currentLang = 'pt';
 
-/* ============ DICIONÁRIO FIELD LABELS / TAGS ============ */
-const FIELD_LABELS = {
-  type:{pt:'Tipo',en:'Type',fr:'Type'},
-  fruitColor:{pt:'Cor do fruto',en:'Fruit colour',fr:'Couleur du fruit'},
-  flavor:{pt:'Sabor',en:'Flavour',fr:'Saveur'},
-  caliber:{pt:'Calibre',en:'Caliber',fr:'Calibre'},
-  caliberAvg:{pt:'Calibre médio',en:'Average caliber',fr:'Calibre moyen'},
-  yield:{pt:'Produtividade',en:'Yield',fr:'Rendement'},
-  cycle:{pt:'Ciclo',en:'Cycle',fr:'Cycle'},
-  breeder:{pt:'Obtentor',en:'Breeder',fr:'Obtenteur'}
-};
+/* ============ DICIONÁRIO TAGS ============ */
 const TAG_LABELS = {
   framboesa:{pt:'Framboesa',en:'Raspberry',fr:'Framboise'},
   amora:{pt:'Amora',en:'Blackberry',fr:'Mûre'}
 };
-const CONF = {pt:'[a confirmar]',en:'[to be confirmed]',fr:'[à confirmer]'};
 
 /* ============ DADOS DAS VARIEDADES (PT/EN/FR) ============ */
 const VARIEDADES = [
   {
     slug:"amalia-rossa", nome:"Amalia Rossa", tipo:"framboesa",
+    link:"https://www.berryplant.com/rasperry/?lang=en#amalia",
     resumo:{
       pt:"Framboesa de fruto vermelho brilhante e sabor equilibrado, muito apreciada pela aparência e conservação pós-colheita.",
       en:"A raspberry with bright red fruit and a balanced flavour, valued for its appearance and post-harvest shelf life.",
       fr:"Framboise au fruit rouge brillant et à la saveur équilibrée, appréciée pour son aspect et sa bonne conservation après récolte."
-    },
-    descricao:{
-      pt:"A Amalia Rossa é uma variedade de framboesa de referência, reconhecida pela cor vermelha viva e brilhante do fruto, pelo sabor doce e equilibrado e pela excelente apresentação em prateleira. Adapta-se bem a produção em substrato e em solo, com boa tolerância ao manuseamento e ao transporte.",
-      en:"Amalia Rossa is a benchmark raspberry variety, recognised for its vivid, glossy red fruit, sweet balanced flavour and excellent shelf presentation. It adapts well to both substrate and soil production, with good tolerance to handling and transport.",
-      fr:"Amalia Rossa est une variété de framboise de référence, reconnue pour la couleur rouge vif et brillante de son fruit, sa saveur douce et équilibrée et son excellente présentation en rayon. Elle s'adapte bien à la production sur substrat comme en pleine terre, avec une bonne tolérance à la manutention et au transport."
-    },
-    caract:[
-      ['type',{pt:'Framboesa (Rubus idaeus)',en:'Raspberry (Rubus idaeus)',fr:'Framboisier (Rubus idaeus)'}],
-      ['fruitColor',{pt:'Vermelho brilhante',en:'Bright red',fr:'Rouge brillant'}],
-      ['flavor',{pt:'Doce, equilibrado',en:'Sweet, balanced',fr:'Doux, équilibré'}],
-      ['caliber',CONF],['yield',CONF],['cycle',CONF]
-    ]
+    }
   },
   {
     slug:"malaika", nome:"Malaika", tipo:"framboesa",
+    link:"https://www.abbreeding.nl/variety/malaika/",
     resumo:{
       pt:"Fruto grande (±7 g) de cor laranja-avermelhada brilhante, com produtividade elevada e dupla colheita.",
       en:"Large fruit (±7 g) with a bright orange-red colour, high yield and double cropping.",
       fr:"Fruit de gros calibre (±7 g), de couleur rouge-orangé brillant, à haut rendement et à double récolte."
-    },
-    descricao:{
-      pt:"A Malaika (ABB135) destaca-se pelo fruto grande e de cor laranja-avermelhada brilhante, com excelente qualidade visual. É uma variedade de produtividade elevada, com possibilidade de dupla colheita (primocane e floricane), o que a torna muito interessante para produções que procuram volume e continuidade de oferta.",
-      en:"Malaika (ABB135) stands out for its large, bright orange-red fruit with excellent visual quality. It is a high-yielding variety capable of double cropping (primocane and floricane), making it very attractive for operations seeking volume and continuity of supply.",
-      fr:"Malaika (ABB135) se distingue par son gros fruit de couleur rouge-orangé brillant et son excellente présentation visuelle. C'est une variété à haut rendement, capable d'une double récolte (primocane et floricane), ce qui la rend très intéressante pour les productions recherchant volume et continuité de l'offre."
-    },
-    caract:[
-      ['type',{pt:'Framboesa (Rubus idaeus)',en:'Raspberry (Rubus idaeus)',fr:'Framboisier (Rubus idaeus)'}],
-      ['fruitColor',{pt:'Laranja-avermelhado brilhante',en:'Bright orange-red',fr:'Rouge-orangé brillant'}],
-      ['caliberAvg',{pt:'≈ 7 g',en:'≈ 7 g',fr:'≈ 7 g'}],
-      ['yield',{pt:'≈ 2,4 kg/m²',en:'≈ 2.4 kg/m²',fr:'≈ 2,4 kg/m²'}],
-      ['cycle',{pt:'Dupla colheita (primocane/floricane)',en:'Double cropping (primocane/floricane)',fr:'Double récolte (primocane/floricane)'}],
-      ['breeder',{pt:'Advanced Berry Breeding',en:'Advanced Berry Breeding',fr:'Advanced Berry Breeding'}]
-    ]
+    }
   },
   {
     slug:"optima", nome:"Optima", tipo:"framboesa",
+    link:"https://www.berryplant.com/rasperry/?lang=en#optima",
     resumo:{
       pt:"Framboesa de perfil produtivo consistente, orientada para qualidade e uniformidade de fruto.",
       en:"A raspberry with a consistently productive profile, geared towards fruit quality and uniformity.",
       fr:"Framboise au profil de production régulier, orientée vers la qualité et l'homogénéité du fruit."
-    },
-    descricao:{
-      pt:"A Optima é uma variedade de framboesa orientada para a uniformidade e consistência da produção. [Completar com dados técnicos do obtentor: calibre, produtividade, ciclo e recomendações de condução.]",
-      en:"Optima is a raspberry variety focused on production uniformity and consistency. [To be completed with the breeder's technical data: caliber, yield, cycle and growing recommendations.]",
-      fr:"Optima est une variété de framboise axée sur l'homogénéité et la régularité de la production. [À compléter avec les données techniques de l'obtenteur : calibre, rendement, cycle et recommandations de conduite.]"
-    },
-    caract:[
-      ['type',{pt:'Framboesa (Rubus idaeus)',en:'Raspberry (Rubus idaeus)',fr:'Framboisier (Rubus idaeus)'}],
-      ['fruitColor',CONF],['caliber',CONF],['yield',CONF],['cycle',CONF],
-      ['breeder',{pt:'Trayplant',en:'Trayplant',fr:'Trayplant'}]
-    ]
+    }
   },
   {
     slug:"easy-rock", nome:"Easy Rock", tipo:"framboesa",
+    link:"https://www.vivaimolari.it/lamponi/",
     resumo:{
       pt:"Framboesa de origem italiana em forte expansão, apreciada pela facilidade de condução e qualidade de fruto.",
       en:"An Italian-origin raspberry in strong expansion, valued for ease of cultivation and fruit quality.",
       fr:"Framboise d'origine italienne en forte expansion, appréciée pour la facilité de conduite et la qualité du fruit."
-    },
-    descricao:{
-      pt:"A Easy Rock é uma variedade de framboesa em forte crescimento na Europa, apreciada pela facilidade de condução da cultura e pela qualidade do fruto. [Completar com dados técnicos do obtentor: calibre, produtividade, ciclo e recomendações de condução.]",
-      en:"Easy Rock is a raspberry variety growing strongly across Europe, valued for how easy the crop is to manage and for its fruit quality. [To be completed with the breeder's technical data: caliber, yield, cycle and growing recommendations.]",
-      fr:"Easy Rock est une variété de framboise en forte croissance en Europe, appréciée pour la facilité de conduite de la culture et la qualité du fruit. [À compléter avec les données techniques de l'obtenteur : calibre, rendement, cycle et recommandations de conduite.]"
-    },
-    caract:[
-      ['type',{pt:'Framboesa (Rubus idaeus)',en:'Raspberry (Rubus idaeus)',fr:'Framboisier (Rubus idaeus)'}],
-      ['fruitColor',CONF],['caliber',CONF],['yield',CONF],['cycle',CONF],
-      ['breeder',{pt:'Trayplant',en:'Trayplant',fr:'Trayplant'}]
-    ]
+    }
   },
   {
     slug:"sweet-royalla", nome:"Sweet Royalla", tipo:"amora",
+    link:"https://www.softfruit.be/en/about-us/",
     resumo:{
       pt:"Amora premium de sabor doce intenso e fruto brilhante, uma das variedades mais promissoras do mercado.",
       en:"A premium blackberry with an intensely sweet flavour and glossy fruit — one of the market's most promising varieties.",
       fr:"Mûre premium à la saveur intensément sucrée et au fruit brillant, l'une des variétés les plus prometteuses du marché."
-    },
-    descricao:{
-      pt:"A Sweet Royalla é uma variedade de amora premium que combina um sabor doce intenso com fruto grande, firme e brilhante. Tem vindo a afirmar-se como uma das amoras mais promissoras no mercado europeu, com excelente aceitação pelo consumidor.",
-      en:"Sweet Royalla is a premium blackberry variety that combines an intensely sweet flavour with large, firm, glossy fruit. It has been establishing itself as one of the most promising blackberries on the European market, with excellent consumer acceptance.",
-      fr:"Sweet Royalla est une variété de mûre premium qui associe une saveur intensément sucrée à un fruit gros, ferme et brillant. Elle s'impose comme l'une des mûres les plus prometteuses du marché européen, avec une excellente acceptation par les consommateurs."
-    },
-    caract:[
-      ['type',{pt:'Amora (Rubus fruticosus)',en:'Blackberry (Rubus fruticosus)',fr:'Mûrier (Rubus fruticosus)'}],
-      ['fruitColor',{pt:'Preto brilhante',en:'Glossy black',fr:'Noir brillant'}],
-      ['flavor',{pt:'Doce intenso',en:'Intensely sweet',fr:'Intensément sucré'}],
-      ['caliber',CONF],['yield',CONF],
-      ['breeder',{pt:'Thwan van Gennip',en:'Thwan van Gennip',fr:'Thwan van Gennip'}]
-    ]
+    }
   },
   {
     slug:"zawadi", nome:"Zawadi", tipo:"framboesa",
+    link:"https://www.abbreeding.nl/variety/zawadi/",
     resumo:{
       pt:"A mais produtiva do nosso portefólio de framboesas (±2,8 kg/m²), com fruto vermelho-claro e dupla colheita.",
       en:"The most productive raspberry in our portfolio (±2.8 kg/m²), with light red fruit and double cropping.",
       fr:"La plus productive de notre portefeuille de framboises (±2,8 kg/m²), au fruit rouge clair et à double récolte."
-    },
-    descricao:{
-      pt:"A Zawadi (ABB136) é uma variedade de framboesa de produtividade excecional — cerca de 2,8 kg/m² — com fruto de calibre médio (6 g) e cor vermelho-clara. Com dupla colheita, é uma excelente opção para maximizar o rendimento por área mantendo boa qualidade de fruto.",
-      en:"Zawadi (ABB136) is a raspberry variety with exceptional yield — around 2.8 kg/m² — with medium-sized fruit (6 g) and a light red colour. With double cropping, it is an excellent option for maximising output per area while keeping good fruit quality.",
-      fr:"Zawadi (ABB136) est une variété de framboise à rendement exceptionnel — environ 2,8 kg/m² — au fruit de calibre moyen (6 g) et de couleur rouge clair. Grâce à sa double récolte, c'est une excellente option pour maximiser le rendement par surface tout en conservant une bonne qualité de fruit."
-    },
-    caract:[
-      ['type',{pt:'Framboesa (Rubus idaeus)',en:'Raspberry (Rubus idaeus)',fr:'Framboisier (Rubus idaeus)'}],
-      ['fruitColor',{pt:'Vermelho claro',en:'Light red',fr:'Rouge clair'}],
-      ['caliberAvg',{pt:'≈ 6 g',en:'≈ 6 g',fr:'≈ 6 g'}],
-      ['yield',{pt:'≈ 2,8 kg/m²',en:'≈ 2.8 kg/m²',fr:'≈ 2,8 kg/m²'}],
-      ['cycle',{pt:'Dupla colheita (primocane/floricane)',en:'Double cropping (primocane/floricane)',fr:'Double récolte (primocane/floricane)'}],
-      ['breeder',{pt:'Advanced Berry Breeding',en:'Advanced Berry Breeding',fr:'Advanced Berry Breeding'}]
-    ]
+    }
   },
   {
     slug:"serena", nome:"Serena", tipo:"framboesa",
+    link:"https://www.mattivi.it/raspberry-varieties/serena/",
     resumo:{
       pt:"Variedade de framboesa do nosso portefólio. [Completar com características técnicas.]",
       en:"A raspberry variety in our portfolio. [Technical characteristics to be completed.]",
       fr:"Variété de framboise de notre portefeuille. [Caractéristiques techniques à compléter.]"
-    },
-    descricao:{
-      pt:"[Completar: descrição da variedade Serena — obtentor, características do fruto, produtividade e ciclo.]",
-      en:"[To be completed: description of the Serena variety — breeder, fruit characteristics, yield and cycle.]",
-      fr:"[À compléter : description de la variété Serena — obtenteur, caractéristiques du fruit, rendement et cycle.]"
-    },
-    caract:[
-      ['type',{pt:'Framboesa (Rubus idaeus)',en:'Raspberry (Rubus idaeus)',fr:'Framboisier (Rubus idaeus)'}],
-      ['fruitColor',CONF],['caliber',CONF],['yield',CONF],['cycle',CONF],['breeder',CONF]
-    ]
+    }
   },
   {
     slug:"sweet-karoline", nome:"Sweet Karoline", tipo:"amora",
+    link:"https://www.sweetkaroline.com/",
     resumo:{
       pt:"Variedade de amora do nosso portefólio. [Completar com informação adicional sobre a variedade.]",
       en:"A blackberry variety in our portfolio. [Additional information about the variety to be completed.]",
       fr:"Variété de mûre de notre portefeuille. [Informations complémentaires sur la variété à compléter.]"
-    },
-    descricao:{
-      pt:"[Completar: descrição da variedade Sweet Karoline — obtentor, características do fruto, produtividade e ciclo.]",
-      en:"[To be completed: description of the Sweet Karoline variety — breeder, fruit characteristics, yield and cycle.]",
-      fr:"[À compléter : description de la variété Sweet Karoline — obtenteur, caractéristiques du fruit, rendement et cycle.]"
-    },
-    caract:[
-      ['type',{pt:'Amora (Rubus fruticosus)',en:'Blackberry (Rubus fruticosus)',fr:'Mûrier (Rubus fruticosus)'}],
-      ['fruitColor',CONF],['caliber',CONF],['yield',CONF],['cycle',CONF],['breeder',CONF]
-    ]
+    }
+  },
+  {
+    slug:"kwanza", nome:"Kwanza", tipo:"framboesa",
+    link:"https://www.abbreeding.nl/variety/kwanza/",
+    resumo:{
+      pt:"Framboesa primocane de fruto grande e cor vermelho-claro, bom sabor e boa conservação, com dupla colheita (outono e primavera).",
+      en:"A primocane raspberry with large, light red fruit, good flavour and strong shelf life, with double cropping (autumn and spring).",
+      fr:"Framboise primocane au fruit gros et de couleur rouge clair, au bon goût et à bonne conservation, à double récolte (automne et printemps)."
+    }
   }
 ];
 
@@ -1015,17 +909,12 @@ const I18N = {
 
   'var.eyebrow':{pt:'As Nossas Variedades',en:'Our Varieties',fr:'Nos Variétés'},
   'var.h1':{pt:'Variedades selecionadas pela força, produtividade e sabor',en:'Varieties selected for vigour, yield and flavour',fr:'Variétés sélectionnées pour leur vigueur, leur rendement et leur saveur'},
-  'var.lead':{pt:'Trabalhamos com variedades licenciadas de referência internacional, adequadas tanto a pequenas explorações como à produção em larga escala. Clique numa variedade para ver a ficha completa.',en:'We work with internationally recognised licensed varieties, suited to both small-scale operations and large-scale production. Click on a variety to see the full profile.',fr:'Nous travaillons avec des variétés sous licence reconnues à l\'échelle internationale, adaptées aussi bien aux petites exploitations qu\'à la production à grande échelle. Cliquez sur une variété pour voir sa fiche complète.'},
+  'var.lead':{pt:'Trabalhamos com variedades licenciadas de referência internacional, adequadas tanto a pequenas explorações como à produção em larga escala. Veja os detalhes de cada variedade no site do respetivo obtentor.',en:'We work with internationally recognised licensed varieties, suited to both small-scale operations and large-scale production. See the details of each variety on its breeder\'s website.',fr:'Nous travaillons avec des variétés sous licence reconnues à l\'échelle internationale, adaptées aussi bien aux petites exploitations qu\'à la production à grande échelle. Consultez les détails de chaque variété sur le site de son obtenteur.'},
   'var.filterAll':{pt:'Todas',en:'All',fr:'Toutes'},
   'var.filterRasp':{pt:'Framboesas',en:'Raspberries',fr:'Framboises'},
   'var.filterBlack':{pt:'Amoras',en:'Blackberries',fr:'Mûres'},
-  'var.verFicha':{pt:'Ver ficha da variedade →',en:'View variety profile →',fr:'Voir la fiche de la variété →'},
-  'var.voltar':{pt:'← Voltar às variedades',en:'← Back to varieties',fr:'← Retour aux variétés'},
-  'var.pedirInfo':{pt:'Pedir informação sobre esta variedade',en:'Ask about this variety',fr:'Demander des informations sur cette variété'},
-  'var.fichaTecnica':{pt:'Ficha técnica',en:'Technical profile',fr:'Fiche technique'},
+  'var.verDetalhes':{pt:'Ver detalhes →',en:'View details →',fr:'Voir les détails →'},
   'var.fotoVariedade':{pt:'Fotografia da variedade {nome} — substituir',en:'Photo of the {nome} variety — to replace',fr:'Photo de la variété {nome} — à remplacer'},
-  'var.naoEncontrada':{pt:'Variedade não encontrada.',en:'Variety not found.',fr:'Variété introuvable.'},
-  'var.detailNote':{pt:'✎ Dados assinalados com [a confirmar] devem ser validados com as fichas técnicas dos obtentores.',en:'✎ Data marked [to be confirmed] should be validated against the breeders\' technical data sheets.',fr:'✎ Les données indiquées [à confirmer] doivent être validées à partir des fiches techniques des obtenteurs.'},
 
   'oe.h1':{pt:'No Norte de Portugal, perto do Porto',en:'In Northern Portugal, near Porto',fr:'Dans le nord du Portugal, près de Porto'},
   'oe.lead':{pt:'Dois campos de produção estrategicamente localizados a menos de uma hora do Porto e do seu aeroporto internacional — entre o litoral de Vila do Conde e o interior de Penafiel.',en:'Two production fields strategically located less than an hour from Porto and its international airport — between the coast of Vila do Conde and inland Penafiel.',fr:'Deux champs de production stratégiquement situés à moins d\'une heure de Porto et de son aéroport international — entre le littoral de Vila do Conde et l\'intérieur des terres de Penafiel.'},
@@ -1113,7 +1002,7 @@ function renderGrid(filtro){
   if(!grid) return;
   grid.innerHTML = '';
   VARIEDADES.filter(v => filtro==='todas' || v.tipo===filtro).forEach(v=>{
-    const card = document.createElement('button');
+    const card = document.createElement('div');
     card.className = 'var-card';
     card.innerHTML = `
       <div class="var-thumb ${v.tipo}"></div>
@@ -1121,33 +1010,10 @@ function renderGrid(filtro){
         <span class="tag ${v.tipo}">${TAG_LABELS[v.tipo][currentLang]}</span>
         <h3>${v.nome}</h3>
         <p>${v.resumo[currentLang]}</p>
-        <div class="var-more">${t('var.verFicha')}</div>
+        ${v.link ? `<a class="var-more" href="${v.link}" target="_blank" rel="noopener">${t('var.verDetalhes')}</a>` : ''}
       </div>`;
-    card.addEventListener('click',()=>{ location.hash = '#/'+currentLang+'/variedades/'+v.slug; });
     grid.appendChild(card);
   });
-}
-
-function renderDetail(slug){
-  const v = VARIEDADES.find(x=>x.slug===slug);
-  const c = document.getElementById('var-detail-container');
-  if(!c) return;
-  if(!v){ c.innerHTML = `<p>${t('var.naoEncontrada')}</p>`; return; }
-  const rows = v.caract.map(([k,valObj])=>`<tr><th>${FIELD_LABELS[k][currentLang]}</th><td>${valObj[currentLang]}</td></tr>`).join('');
-  c.innerHTML = `
-    <a class="back-link" href="#/${currentLang}/variedades">${t('var.voltar')}</a>
-    <div class="var-detail-head">
-      <div>
-        <span class="tag ${v.tipo}">${TAG_LABELS[v.tipo][currentLang]}</span>
-        <h1 style="font-size:2.4rem;margin:6px 0 16px">${v.nome}</h1>
-        <p style="color:var(--ink-soft)">${v.descricao[currentLang]}</p>
-        <div style="margin-top:24px"><a class="btn btn-primary" href="#/${currentLang}/contactos">${t('var.pedirInfo')}</a></div>
-      </div>
-      <div class="placeholder-media ${v.tipo}" style="min-height:300px"></div>
-    </div>
-    <h3 style="margin-top:44px;margin-bottom:6px">${t('var.fichaTecnica')}</h3>
-    <table class="char-table">${rows}</table>
-    <p class="note-edit">${t('var.detailNote')}</p>`;
 }
 
 /* ============ FILTROS ============ */
@@ -1212,15 +1078,13 @@ function router(){
   currentLang = lang;
   let page = routes[path];
   let navKey = page;
-  let varietySlug = null;
   let filtroPreset = null;
   if(page==='campo-parada'||page==='campo-cabeca-santa') navKey='campos';
   if(!page && (path==='/variedades/framboesa' || path==='/variedades/amora')){
     page = 'variedades'; navKey = 'variedades';
     filtroPreset = path.split('/')[2];
   } else if(!page && path.startsWith('/variedades/')){
-    page = 'variedade-detalhe'; navKey = 'variedades';
-    varietySlug = path.split('/')[2];
+    page = 'variedades'; navKey = 'variedades';
   }
   if(!page){ page='home'; navKey='home'; }
 
@@ -1230,7 +1094,6 @@ function router(){
   const filtroAtivo = filtroPreset || (document.querySelector('.chip.active')?document.querySelector('.chip.active').dataset.filter:'todas');
   document.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active', b.dataset.filter===filtroAtivo));
   renderGrid(filtroAtivo);
-  if(varietySlug) renderDetail(varietySlug);
 
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('visible'));
   document.getElementById('page-'+page).classList.add('visible');
