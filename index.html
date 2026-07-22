@@ -320,6 +320,51 @@
   .breadcrumb{font-size:.82rem;color:#a9c4b1;margin-bottom:18px}
   .breadcrumb a{color:#a9c4b1;text-decoration:none}
   .breadcrumb a:hover{color:#fff}
+
+  /* ---------- produtos / cronograma (calendário Jan-Jan) ---------- */
+  .crono-wrap{margin-top:40px}
+  .crono-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 2px 10px}
+  .crono-track{position:relative;height:225px;min-width:820px}
+  .crono-line{position:absolute;top:135px;left:40px;right:40px;height:3px;background:var(--verde-100);border-radius:3px}
+  .crono-band{position:absolute;top:131px;height:11px;border-radius:6px;opacity:.92}
+  .crono-band-plantacao{background:var(--lime-400)}
+  .crono-band-green{background:var(--framboesa)}
+  .crono-band-long{background:#a9835a}
+  .crono-tick{position:absolute;top:0;height:225px;display:flex;flex-direction:column;align-items:center;transform:translateX(-50%);width:70px}
+  .crono-icon-slot{height:135px;width:100%;display:flex;align-items:flex-end;justify-content:center;position:relative}
+  .crono-pot-wrap{opacity:0;transform:translateY(16px) scale(.82);transform-origin:bottom center;transition:opacity .7s ease,transform .7s ease}
+  .crono-wrap.in-view .crono-pot-wrap{opacity:1;transform:translateY(0) scale(1)}
+  .crono-tick-ago .crono-plant,.crono-tick-out .crono-plant{transform:scaleY(1.5);transform-origin:32px 74px}
+  .crono-leaf{transform-box:fill-box;transform-origin:center}
+  .crono-wrap.in-view .crono-tick-mar .crono-leaf{animation:cronoSway 3.2s ease-in-out infinite}
+  .crono-wrap.in-view .crono-tick-ago .crono-leaf{animation:cronoSway 3.6s ease-in-out infinite}
+  .crono-wrap.in-view .crono-tick-out .crono-leaf{animation:cronoSwayWilt 4.2s ease-in-out infinite}
+  .crono-leaf:nth-of-type(2n){animation-delay:.4s !important}
+  .crono-leaf:nth-of-type(3n){animation-delay:.8s !important}
+  @keyframes cronoSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes cronoSwayWilt{0%,100%{transform:rotate(-1.5deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(1px)}}
+  .crono-dot{width:9px;height:9px;border-radius:50%;background:var(--verde-800);border:2px solid #fff;box-shadow:0 0 0 1px rgba(22,48,31,.15);flex-shrink:0}
+  .crono-tick-icon .crono-dot{background:var(--framboesa);width:11px;height:11px}
+  .crono-label{margin-top:14px;font-size:.74rem;color:var(--ink-soft);font-weight:700;white-space:nowrap;text-align:center;line-height:1.3}
+  .crono-label small{display:block;font-size:.6rem;font-weight:500;opacity:.7;text-transform:none;letter-spacing:0;white-space:normal;max-width:76px;margin:1px auto 0}
+  .crono-legend{margin-top:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .crono-legend-item{display:flex;gap:12px;background:var(--branco);border-radius:var(--radius);padding:20px 20px 22px;box-shadow:var(--shadow)}
+  .crono-legend-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;margin-top:6px}
+  .crono-legend-plantacao .crono-legend-dot{background:var(--lime-400)}
+  .crono-legend-green .crono-legend-dot{background:var(--framboesa)}
+  .crono-legend-long .crono-legend-dot{background:#a9835a}
+  .crono-legend-item b{display:block;font-size:1.02rem}
+  .crono-legend-item small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);opacity:.8;margin:3px 0 8px}
+  .crono-legend-item p{color:var(--ink-soft);font-size:.86rem}
+  @media(max-width:800px){
+    .crono-legend{grid-template-columns:1fr;gap:16px}
+  }
+
+  /* ---------- produtos / galeria ---------- */
+  .produtos-galeria-grid{margin-top:32px;display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+  .produtos-galeria-item h3{font-size:1.05rem;margin-bottom:12px}
+  .produtos-galeria-item .photo-carousel{height:300px}
+  @media(max-width:760px){.produtos-galeria-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -338,6 +383,7 @@
         <a href="#/pt/quem-somos" data-route="/quem-somos" data-nav="quem-somos" data-i18n="nav.quemSomos">Quem Somos</a>
         <a href="#/pt/campos" data-route="/campos" data-nav="campos" data-i18n="nav.campos">Quintas</a>
         <a href="#/pt/variedades" data-route="/variedades" data-nav="variedades" data-i18n="nav.variedades">Variedades</a>
+        <a href="#/pt/produtos" data-route="/produtos" data-nav="produtos" data-i18n="nav.produtos">Produtos</a>
         <a href="#/pt/onde-estamos" data-route="/onde-estamos" data-nav="onde-estamos" data-i18n="nav.ondeEstamos">Onde Estamos</a>
         <a href="#/pt/contactos" data-route="/contactos" data-nav="contactos" class="menu-cta" data-i18n="nav.contactos">Contactos</a>
       </nav>
@@ -675,6 +721,107 @@
   </section>
 </div>
 
+<!-- ================= PRODUTOS ================= -->
+<div class="page" id="page-produtos">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="#/pt/" data-route="/" data-i18n="nav.home">Início</a> / <span data-i18n="nav.produtos">Produtos</span></div>
+      <span class="eyebrow" data-i18n="prod.eyebrow">Os Nossos Produtos</span>
+      <h1 data-i18n="prod.h1">Produção à medida para cada cliente</h1>
+      <p data-i18n="prod.lead" data-i18n-html style="max-width:none">Nos nossos campos temos as melhores condições climáticas para produzir canas de acordo com as necessidades de cada cliente.<br><br>Conseguimos ter uma vasta gama de oferta desde green canes precoces (Agosto) e long canes mais tardias (Jan).<br><br>Estas condições permitem-nos adaptar-nos às datas de plantação de cada cliente e poupar custos com necessidades de frio.</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="container">
+      <span class="eyebrow" data-i18n="prod.timelineEyebrow">Cronograma de Produção</span>
+      <h2 data-i18n="prod.timelineTitle">Da plantação à entrega</h2>
+      <div class="crono-wrap" id="produtos-timeline">
+        <div class="crono-scroll">
+          <div class="crono-track" id="crono-track"></div>
+        </div>
+      </div>
+      <div class="crono-legend">
+        <div class="crono-legend-item crono-legend-plantacao">
+          <span class="crono-legend-dot"></span>
+          <div>
+            <b data-i18n="prod.t1Title">Plantação</b>
+            <small data-i18n="prod.t1Period">Março – Junho</small>
+            <p data-i18n="prod.t1Text" data-i18n-html>Plantamos desde o início de Março até à última semana de Junho, garantindo a mesma qualidade em <em>timings</em> distintos.</p>
+          </div>
+        </div>
+        <div class="crono-legend-item crono-legend-green">
+          <span class="crono-legend-dot"></span>
+          <div>
+            <b data-i18n="prod.t2Title">Green Canes</b>
+            <small data-i18n="prod.t2Period">Agosto – Setembro</small>
+            <p data-i18n="prod.t2Text">Plantando até final de Abril, conseguimos produzir green canes com tamanho e maturidade suficiente para serem enviadas para o frio.</p>
+          </div>
+        </div>
+        <div class="crono-legend-item crono-legend-long">
+          <span class="crono-legend-dot"></span>
+          <div>
+            <b data-i18n="prod.t3Title">Long Canes</b>
+            <small data-i18n="prod.t3Period">Outubro – Janeiro (ano seguinte)</small>
+            <p data-i18n="prod.t3Text">Atingimos a dormência das plantas em final de Outubro, sendo possível manter as plantas no campo até final de Janeiro, garantindo horas de frio suficientes para um ciclo 'natural'.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="container">
+      <span class="eyebrow" data-i18n="prod.galeriaEyebrow">A Nossa Experiência</span>
+      <h2 data-i18n="prod.galeriaTitle">Fotografias de campo</h2>
+      <div class="produtos-galeria-grid">
+        <div class="produtos-galeria-item">
+          <h3 data-i18n="prod.galLongCane">Long Cane</h3>
+          <div class="photo-carousel" data-carousel="long_cane">
+            <img class="carousel-slide active" data-slide-idx="0" src="long-cane-1.jpg" alt="Long Cane — ACSS Plant Growers">
+            <img class="carousel-slide" data-slide-idx="1" src="long-cane-2.jpg" alt="Long Cane — ACSS Plant Growers">
+            <img class="carousel-slide" data-slide-idx="2" src="long-cane-3.jpg" alt="Long Cane — ACSS Plant Growers">
+            <button class="carousel-btn carousel-prev" aria-label="Foto anterior" onclick="carouselNav(this.closest('.photo-carousel'),-1)">&#8249;</button>
+            <button class="carousel-btn carousel-next" aria-label="Foto seguinte" onclick="carouselNav(this.closest('.photo-carousel'),1)">&#8250;</button>
+            <div class="carousel-dots"><button class="carousel-dot active" aria-label="Foto 1" onclick="carouselGo(this.closest('.photo-carousel'),0)"></button><button class="carousel-dot" aria-label="Foto 2" onclick="carouselGo(this.closest('.photo-carousel'),1)"></button><button class="carousel-dot" aria-label="Foto 3" onclick="carouselGo(this.closest('.photo-carousel'),2)"></button></div>
+          </div>
+        </div>
+        <div class="produtos-galeria-item">
+          <h3 data-i18n="prod.galGreenCane">Green Cane</h3>
+          <div class="photo-carousel" data-carousel="green_cane">
+            <img class="carousel-slide active" data-slide-idx="0" src="green-cane-1.jpg" alt="Green Cane — ACSS Plant Growers">
+            <img class="carousel-slide" data-slide-idx="1" src="green-cane-2.jpg" alt="Green Cane — ACSS Plant Growers">
+            <img class="carousel-slide" data-slide-idx="2" src="green-cane-3.jpg" alt="Green Cane — ACSS Plant Growers">
+            <button class="carousel-btn carousel-prev" aria-label="Foto anterior" onclick="carouselNav(this.closest('.photo-carousel'),-1)">&#8249;</button>
+            <button class="carousel-btn carousel-next" aria-label="Foto seguinte" onclick="carouselNav(this.closest('.photo-carousel'),1)">&#8250;</button>
+            <div class="carousel-dots"><button class="carousel-dot active" aria-label="Foto 1" onclick="carouselGo(this.closest('.photo-carousel'),0)"></button><button class="carousel-dot" aria-label="Foto 2" onclick="carouselGo(this.closest('.photo-carousel'),1)"></button><button class="carousel-dot" aria-label="Foto 3" onclick="carouselGo(this.closest('.photo-carousel'),2)"></button></div>
+          </div>
+        </div>
+        <div class="produtos-galeria-item">
+          <h3 data-i18n="prod.galRoots">Roots</h3>
+          <div class="photo-carousel" data-carousel="roots">
+            <img class="carousel-slide active" data-slide-idx="0" src="roots-1.jpg" alt="Roots — ACSS Plant Growers">
+            <img class="carousel-slide" data-slide-idx="1" src="roots-2.jpg" alt="Roots — ACSS Plant Growers">
+            <button class="carousel-btn carousel-prev" aria-label="Foto anterior" onclick="carouselNav(this.closest('.photo-carousel'),-1)">&#8249;</button>
+            <button class="carousel-btn carousel-next" aria-label="Foto seguinte" onclick="carouselNav(this.closest('.photo-carousel'),1)">&#8250;</button>
+            <div class="carousel-dots"><button class="carousel-dot active" aria-label="Foto 1" onclick="carouselGo(this.closest('.photo-carousel'),0)"></button><button class="carousel-dot" aria-label="Foto 2" onclick="carouselGo(this.closest('.photo-carousel'),1)"></button></div>
+          </div>
+        </div>
+        <div class="produtos-galeria-item">
+          <h3 data-i18n="prod.galPacking">Packing</h3>
+          <div class="photo-carousel" data-carousel="packing">
+            <img class="carousel-slide active" data-slide-idx="0" src="packing-1.jpg" alt="Packing — ACSS Plant Growers">
+            <img class="carousel-slide" data-slide-idx="1" src="packing-2.jpg" alt="Packing — ACSS Plant Growers">
+            <button class="carousel-btn carousel-prev" aria-label="Foto anterior" onclick="carouselNav(this.closest('.photo-carousel'),-1)">&#8249;</button>
+            <button class="carousel-btn carousel-next" aria-label="Foto seguinte" onclick="carouselNav(this.closest('.photo-carousel'),1)">&#8250;</button>
+            <div class="carousel-dots"><button class="carousel-dot active" aria-label="Foto 1" onclick="carouselGo(this.closest('.photo-carousel'),0)"></button><button class="carousel-dot" aria-label="Foto 2" onclick="carouselGo(this.closest('.photo-carousel'),1)"></button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
 <!-- ================= ONDE ESTAMOS ================= -->
 <div class="page" id="page-onde-estamos">
   <div class="page-hero">
@@ -872,6 +1019,81 @@ function carouselGo(wrap, idx){
   carouselSetActive(wrap, idx);
 }
 
+/* ============ PRODUTOS: CALENDÁRIO DO CRONOGRAMA (Jan – Jan) ============ */
+const MESES_ABREV = {
+  pt:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+  en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+  fr:['Janv','Févr','Mars','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc']
+};
+const CRONO_FASES = [
+  {key:'plantacao', desde:2, ate:5},
+  {key:'green', desde:7, ate:8},
+  {key:'long', desde:9, ate:12}
+];
+function cronoPotSvg(stage){
+  const stems = {
+    mar:{stroke:'#4a7c3f', d:'M32 74 C32 64 30 56 32 46', leaves:[
+      {d:'M32 54 C24 50 20 42 24 36 C30 40 32 48 32 54 Z', fill:'#7CB342'},
+      {d:'M32 60 C40 56 44 48 40 42 C34 46 32 54 32 60 Z', fill:'#8BC34A'}
+    ]},
+    ago:{stroke:'#3f7d32', d:'M32 74 C33 60 30 45 32 30 C33 22 32 16 32 12', leaves:[
+      {d:'M32 62 C22 58 16 48 20 40 C28 44 32 54 32 62 Z', fill:'#66BB6A'},
+      {d:'M32 62 C42 58 48 48 44 40 C36 44 32 54 32 62 Z', fill:'#4CAF50'},
+      {d:'M32 44 C22 40 17 30 22 22 C29 27 32 36 32 44 Z', fill:'#7CB342'},
+      {d:'M32 44 C42 40 47 30 42 22 C35 27 32 36 32 44 Z', fill:'#66BB6A'},
+      {d:'M32 26 C24 22 20 14 24 8 C30 12 32 20 32 26 Z', fill:'#8BC34A'}
+    ]},
+    out:{stroke:'#8a6a4a', d:'M32 74 C33 60 30 45 32 30 C33 22 32 16 32 12', leaves:[
+      {d:'M32 62 C24 64 16 60 16 52 C24 52 30 56 32 62 Z', fill:'#D4A93B'},
+      {d:'M32 62 C40 66 48 62 48 54 C40 52 34 58 32 62 Z', fill:'#C99A2E'},
+      {d:'M32 44 C25 47 18 44 17 37 C24 36 30 39 32 44 Z', fill:'#E0B84B'},
+      {d:'M32 44 C39 48 46 45 47 38 C40 36 34 40 32 44 Z', fill:'#C99A2E'},
+      {d:'M32 26 C26 29 20 26 19 20 C25 18 30 21 32 26 Z', fill:'#D4A93B'}
+    ]}
+  };
+  const s = stems[stage];
+  const leaves = s.leaves.map(l=>`<path class="crono-leaf" d="${l.d}" fill="${l.fill}"/>`).join('');
+  return `<svg viewBox="0 0 64 100" width="56" height="88" style="overflow:visible">
+    <path d="M14 78 L50 78 L44 96 Q32 100 20 96 Z" fill="#B5651D"/>
+    <rect x="10" y="74" width="44" height="8" rx="3" fill="#9C551A"/>
+    <g class="crono-plant">
+      <path d="${s.d}" stroke="${s.stroke}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      ${leaves}
+    </g>
+  </svg>`;
+}
+function renderCronograma(){
+  const track = document.getElementById('crono-track');
+  if(!track) return;
+  const meses = MESES_ABREV[currentLang] || MESES_ABREV.pt;
+  const step = 100/12;
+  const bandsHtml = CRONO_FASES.map(f=>`<div class="crono-band crono-band-${f.key}" style="left:calc(40px + (100% - 80px) * ${f.desde/12});width:calc((100% - 80px) * ${(f.ate-f.desde)/12})"></div>`).join('');
+  const iconStage = {2:'mar', 7:'ago', 9:'out'};
+  const ticksHtml = Array.from({length:13}).map((_,i)=>{
+    const stage = iconStage[i];
+    const label = i===12 ? `${meses[0]}<small>${t('prod.anoSeguinteAbrev')}</small>` : meses[i];
+    return `<div class="crono-tick${stage?` crono-tick-icon crono-tick-${stage}`:''}" style="left:calc(40px + (100% - 80px) * ${i/12})">
+      <div class="crono-icon-slot">${stage?`<div class="crono-pot-wrap">${cronoPotSvg(stage)}</div>`:''}</div>
+      <div class="crono-dot"></div>
+      <div class="crono-label">${label}</div>
+    </div>`;
+  }).join('');
+  track.innerHTML = `<div class="crono-line"></div>${bandsHtml}${ticksHtml}`;
+}
+
+/* ============ PRODUTOS: ANIMAÇÃO DO CRONOGRAMA ============ */
+function initTimelineObserver(){
+  const el = document.getElementById('produtos-timeline');
+  if(!el || el.dataset.observed) return;
+  el.dataset.observed = '1';
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){ el.classList.add('in-view'); io.disconnect(); }
+    });
+  }, {threshold:.3});
+  io.observe(el);
+}
+
 /* ============ IDIOMA ============ */
 const LANGS = ['pt','en','fr'];
 let currentLang = 'pt';
@@ -975,6 +1197,7 @@ const I18N = {
   'nav.quemSomos':{pt:'Quem Somos',en:'About Us',fr:'Qui sommes-nous'},
   'nav.campos':{pt:'Quintas',en:'Farms',fr:'Exploitations'},
   'nav.variedades':{pt:'Variedades',en:'Varieties',fr:'Variétés'},
+  'nav.produtos':{pt:'Produtos',en:'Products',fr:'Produits'},
   'nav.ondeEstamos':{pt:'Onde Estamos',en:'Where We Are',fr:'Où nous sommes'},
   'nav.contactos':{pt:'Contactos',en:'Contact',fr:'Contact'},
   'home.parceirosEyebrow2':{pt:'Clientes e Parceiros de Referência',en:'Clients and Reference Partners',fr:'Clients et Partenaires de Référence'},'home.parceirosDesc':{pt:'Trabalhamos com alguns dos maiores produtores nacionais e internacionais assim como os <em>breeders</em> das melhores variedades de forma a servir os nossos clientes com a máxima qualidade.',en:'We work with some of the largest national and international growers, as well as the <em>breeders</em> behind the best varieties, to serve our clients with the highest quality.',fr:'Nous travaillons avec certains des plus grands producteurs nationaux et internationaux, ainsi qu\'avec les <em>breeders</em> des meilleures variétés, afin de servir nos clients avec la plus haute qualité.'},
@@ -1175,7 +1398,32 @@ const I18N = {
   'map.notLoaded':{pt:'O mapa não pôde ser carregado (sem ligação ao serviço de mapas). Verifique a ligação à internet.',en:'The map could not be loaded (no connection to the map service). Please check your internet connection.',fr:'La carte n\'a pas pu être chargée (pas de connexion au service de cartes). Vérifiez votre connexion internet.'},
 
   'site.title':{pt:'ACSS — Plant Growers | Plantas de Framboesa e Amora',en:'ACSS — Plant Growers | Raspberry and Blackberry Plants',fr:'ACSS — Plant Growers | Plants de Framboisier et de Mûrier'},
-  'site.description':{pt:'ACSS Plant Growers — produção de plantas de framboesa e amora de alta qualidade no Norte de Portugal. Campos em Parada (Vila do Conde) e Cabeça Santa (Penafiel).',en:'ACSS Plant Growers — high-quality raspberry and blackberry plant production in Northern Portugal. Fields in Parada (Vila do Conde) and Cabeça Santa (Penafiel).',fr:'ACSS Plant Growers — production de plants de framboisier et de mûrier de haute qualité dans le nord du Portugal. Champs à Parada (Vila do Conde) et Cabeça Santa (Penafiel).'}
+  'site.description':{pt:'ACSS Plant Growers — produção de plantas de framboesa e amora de alta qualidade no Norte de Portugal. Campos em Parada (Vila do Conde) e Cabeça Santa (Penafiel).',en:'ACSS Plant Growers — high-quality raspberry and blackberry plant production in Northern Portugal. Fields in Parada (Vila do Conde) and Cabeça Santa (Penafiel).',fr:'ACSS Plant Growers — production de plants de framboisier et de mûrier de haute qualité dans le nord du Portugal. Champs à Parada (Vila do Conde) et Cabeça Santa (Penafiel).'},
+  'prod.eyebrow':{pt:'Os Nossos Produtos',en:'Our Products',fr:'Nos Produits'},
+  'prod.h1':{pt:'Produção à medida para cada cliente',en:'Production tailored to each customer',fr:'Production sur mesure pour chaque client'},
+  'prod.lead':{
+    pt:'Nos nossos campos temos as melhores condições climáticas para produzir canas de acordo com as necessidades de cada cliente.<br><br>Conseguimos ter uma vasta gama de oferta desde green canes precoces (Agosto) e long canes mais tardias (Jan).<br><br>Estas condições permitem-nos adaptar-nos às datas de plantação de cada cliente e poupar custos com necessidades de frio.',
+    en:'In our fields we have the best climate conditions to produce canes according to each customer\'s needs.<br><br>We\'re able to offer a wide range, from early green canes (August) to later long canes (January).<br><br>These conditions allow us to adapt to each customer\'s planting dates and save on chill costs.',
+    fr:'Dans nos champs, nous disposons des meilleures conditions climatiques pour produire des cannes selon les besoins de chaque client.<br><br>Nous pouvons proposer une large gamme, des green canes précoces (Août) aux long canes plus tardives (Janvier).<br><br>Ces conditions nous permettent de nous adapter aux dates de plantation de chaque client et de réduire les coûts liés au froid (chill).'
+  },
+  'prod.timelineEyebrow':{pt:'Cronograma de Produção',en:'Production Timeline',fr:'Calendrier de Production'},
+  'prod.timelineTitle':{pt:'Da plantação à entrega',en:'From planting to delivery',fr:'De la plantation à la livraison'},
+  'prod.t1Period':{pt:'Março – Junho',en:'March – June',fr:'Mars – Juin'},
+  'prod.t1Title':{pt:'Plantação',en:'Planting',fr:'Plantation'},
+  'prod.t1Text':{pt:'Plantamos desde o início de Março até à última semana de Junho, garantindo a mesma qualidade em <em>timings</em> distintos.',en:'We plant from early March until the last week of June, guaranteeing the same quality across different <em>timings</em>.',fr:'Nous plantons de début mars jusqu\'à la dernière semaine de juin, garantissant la même qualité selon des <em>timings</em> distincts.'},
+  'prod.t2Period':{pt:'Agosto – Setembro',en:'August – September',fr:'Août – Septembre'},
+  'prod.t2Title':{pt:'Green Canes',en:'Green Canes',fr:'Green Canes'},
+  'prod.t2Text':{pt:'Plantando até final de Abril, conseguimos produzir green canes com tamanho e maturidade suficiente para serem enviadas para o frio.',en:'By planting until the end of April, we manage to produce green canes with enough size and maturity to be sent for chill.',fr:'En plantant jusqu\'à fin avril, nous parvenons à produire des green canes avec une taille et une maturité suffisantes pour être envoyées au froid (chill).'},
+  'prod.t3Period':{pt:'Outubro – Janeiro (ano seguinte)',en:'October – January (following year)',fr:'Octobre – Janvier (année suivante)'},
+  'prod.anoSeguinteAbrev':{pt:'ano seguinte',en:'next year',fr:'année suivante'},
+  'prod.t3Title':{pt:'Long Canes',en:'Long Canes',fr:'Long Canes'},
+  'prod.t3Text':{pt:'Atingimos a dormência das plantas em final de Outubro, sendo possível manter as plantas no campo até final de Janeiro, garantindo horas de frio suficientes para um ciclo \'natural\'.',en:'We reach plant dormancy by the end of October, making it possible to keep the plants in the field until the end of January, guaranteeing enough chill hours for a \'natural\' cycle.',fr:'Nous atteignons la dormance des plantes fin octobre, ce qui permet de garder les plantes au champ jusqu\'à fin janvier, garantissant suffisamment d\'heures de froid pour un cycle « naturel ».'},
+  'prod.galeriaEyebrow':{pt:'A Nossa Experiência',en:'Our Experience',fr:'Notre Expérience'},
+  'prod.galeriaTitle':{pt:'Fotografias de campo',en:'Field photographs',fr:'Photographies de terrain'},
+  'prod.galLongCane':{pt:'Long Cane',en:'Long Cane',fr:'Long Cane'},
+  'prod.galGreenCane':{pt:'Green Cane',en:'Green Cane',fr:'Green Cane'},
+  'prod.galRoots':{pt:'Raízes',en:'Roots',fr:'Racines'},
+  'prod.galPacking':{pt:'Embalamento',en:'Packing',fr:'Emballage'}
 };
 
 function t(key){
@@ -1276,6 +1524,7 @@ const routes = {
   '/campos/parada':'campo-parada',
   '/campos/cabeca-santa':'campo-cabeca-santa',
   '/variedades':'variedades',
+  '/produtos':'produtos',
   '/onde-estamos':'onde-estamos',
   '/contactos':'contactos'
 };
@@ -1320,6 +1569,7 @@ function router(){
   if(page==='onde-estamos') makeMap('mapa-grande',[41.25,-8.46],10,['parada','cabecasanta']);
   if(page==='campo-parada') makeMap('mapa-parada',[LOCS.parada.lat,LOCS.parada.lng],13,['parada']);
   if(page==='campo-cabeca-santa') makeMap('mapa-cabecasanta',[LOCS.cabecasanta.lat,LOCS.cabecasanta.lng],13,['cabecasanta']);
+  if(page==='produtos'){ renderCronograma(); initTimelineObserver(); }
 }
 window.addEventListener('hashchange',router);
 
