@@ -960,6 +960,8 @@ const I18N = {
   'ct.formOk':{pt:'Obrigado! Entraremos em contacto brevemente.',en:'Thank you! We\'ll be in touch shortly.',fr:'Merci ! Nous vous recontacterons prochainement.'},
   'ct.formError':{pt:'Não foi possível enviar o pedido. Tente novamente ou contacte-nos diretamente por email.',en:'We couldn\'t send your request. Please try again or contact us directly by email.',fr:'Nous n\'avons pas pu envoyer votre demande. Veuillez réessayer ou nous contacter directement par e-mail.'},
   'ct.errQuantidade':{pt:'A quantidade pretendida tem de ser um número igual ou superior a 0.',en:'The requested quantity must be a number of 0 or more.',fr:'La quantité souhaitée doit être un nombre égal ou supérieur à 0.'},
+  'ct.errObrigatorios':{pt:'Preencha todos os campos obrigatórios (Nome, Email, Cargo, País, Telefone e Mensagem).',en:'Please fill in all required fields (Name, Email, Job title, Country, Phone and Message).',fr:'Veuillez remplir tous les champs obligatoires (Nom, E-mail, Poste, Pays, Téléphone et Message).'},
+  'ct.errEmail':{pt:'Introduza um endereço de email válido.',en:'Please enter a valid email address.',fr:'Veuillez saisir une adresse e-mail valide.'},
 
   'footer.tagline':{pt:'Plantas de elevada qualidade, produzidas no Norte de Portugal com respeito pela natureza!',en:'High-quality plants, grown in Northern Portugal with respect for nature!',fr:'Des plants de haute qualité, produits dans le nord du Portugal dans le respect de la nature !'},
   'footer.certBadge':{pt:'Certificado GLOBAL G.A.P. e GRASP',en:'GLOBAL G.A.P. and GRASP certified',fr:'Certifié GLOBAL G.A.P. et GRASP'},
@@ -1143,14 +1145,6 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
   okBox.style.display = 'none';
   errBox.style.display = 'none';
 
-  const quantidadeRaw = document.getElementById('ct-quantidade').value.trim();
-  if (quantidadeRaw !== '' && (!/^\d+$/.test(quantidadeRaw) || Number(quantidadeRaw) < 0)) {
-    errBox.textContent = t('ct.errQuantidade');
-    errBox.style.display = 'block';
-    return;
-  }
-  errBox.textContent = t('ct.formError');
-
   const payload = {
     nome: document.getElementById('ct-nome').value.trim(),
     email: document.getElementById('ct-email').value.trim(),
@@ -1159,10 +1153,32 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
     pais: document.getElementById('ct-pais').value.trim(),
     telefone: document.getElementById('ct-telefone').value.trim(),
     interesse: document.getElementById('ct-interesse').value,
-    quantidade: quantidadeRaw,
+    quantidade: document.getElementById('ct-quantidade').value.trim(),
     mensagem: document.getElementById('ct-mensagem').value.trim(),
     website: document.getElementById('ct-website').value // honeypot — deve ficar vazio
   };
+
+  // Verificação explícita dos campos obrigatórios (Nome, Email, Cargo, País,
+  // Telefone, Mensagem) — segunda linha de defesa, independente da validação
+  // nativa do browser (atributo "required" nos inputs) e da validação do
+  // próprio worker (que só exige Nome/Email/Mensagem).
+  const camposObrigatorios = ['nome', 'email', 'cargo', 'pais', 'telefone', 'mensagem'];
+  if (camposObrigatorios.some(campo => !payload[campo])) {
+    errBox.textContent = t('ct.errObrigatorios');
+    errBox.style.display = 'block';
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+    errBox.textContent = t('ct.errEmail');
+    errBox.style.display = 'block';
+    return;
+  }
+  if (payload.quantidade !== '' && (!/^\d+$/.test(payload.quantidade) || Number(payload.quantidade) < 0)) {
+    errBox.textContent = t('ct.errQuantidade');
+    errBox.style.display = 'block';
+    return;
+  }
+  errBox.textContent = t('ct.formError');
 
   const originalLabel = btn.textContent;
   btn.disabled = true;
