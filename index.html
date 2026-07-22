@@ -636,13 +636,69 @@
           <label data-i18n="ct.labelNome">Nome</label><input id="ct-nome" type="text" required placeholder="O seu nome" data-i18n-placeholder="ct.placeholderNome">
           <label data-i18n="ct.labelEmail">Email</label><input id="ct-email" type="email" required placeholder="oseu@email.com" data-i18n-placeholder="ct.placeholderEmail">
           <label data-i18n="ct.labelEmpresa">Empresa</label><input id="ct-empresa" type="text" placeholder="Nome da empresa (opcional)" data-i18n-placeholder="ct.placeholderEmpresa">
-          <label data-i18n="ct.labelCargo">Cargo</label><input id="ct-cargo" type="text" required placeholder="O seu cargo na empresa" data-i18n-placeholder="ct.placeholderCargo">
-          <label data-i18n="ct.labelPais">País</label><input id="ct-pais" type="text" required placeholder="O seu país" data-i18n-placeholder="ct.placeholderPais">
+          <label data-i18n="ct.labelCargo">Cargo</label><input id="ct-cargo" type="text" placeholder="O seu cargo na empresa (opcional)" data-i18n-placeholder="ct.placeholderCargo">
+          <label data-i18n="ct.labelPais">País</label>
+          <select id="ct-pais" required>
+            <option value="" disabled selected data-i18n="ct.optPaisPlaceholder">Selecione o país</option>
+            <option data-i18n="ct.optPaisPT">Portugal</option>
+            <option data-i18n="ct.optPaisZA">África do Sul</option>
+            <option data-i18n="ct.optPaisDE">Alemanha</option>
+            <option data-i18n="ct.optPaisDZ">Argélia</option>
+            <option data-i18n="ct.optPaisAR">Argentina</option>
+            <option data-i18n="ct.optPaisAU">Austrália</option>
+            <option data-i18n="ct.optPaisAT">Áustria</option>
+            <option data-i18n="ct.optPaisBE">Bélgica</option>
+            <option data-i18n="ct.optPaisBR">Brasil</option>
+            <option data-i18n="ct.optPaisBG">Bulgária</option>
+            <option data-i18n="ct.optPaisCA">Canadá</option>
+            <option data-i18n="ct.optPaisCL">Chile</option>
+            <option data-i18n="ct.optPaisCN">China</option>
+            <option data-i18n="ct.optPaisCO">Colômbia</option>
+            <option data-i18n="ct.optPaisHR">Croácia</option>
+            <option data-i18n="ct.optPaisDK">Dinamarca</option>
+            <option data-i18n="ct.optPaisEG">Egito</option>
+            <option data-i18n="ct.optPaisSK">Eslováquia</option>
+            <option data-i18n="ct.optPaisSI">Eslovénia</option>
+            <option data-i18n="ct.optPaisES">Espanha</option>
+            <option data-i18n="ct.optPaisUS">Estados Unidos</option>
+            <option data-i18n="ct.optPaisEE">Estónia</option>
+            <option data-i18n="ct.optPaisFI">Finlândia</option>
+            <option data-i18n="ct.optPaisFR">França</option>
+            <option data-i18n="ct.optPaisGR">Grécia</option>
+            <option data-i18n="ct.optPaisHU">Hungria</option>
+            <option data-i18n="ct.optPaisIN">Índia</option>
+            <option data-i18n="ct.optPaisIE">Irlanda</option>
+            <option data-i18n="ct.optPaisIS">Islândia</option>
+            <option data-i18n="ct.optPaisIL">Israel</option>
+            <option data-i18n="ct.optPaisIT">Itália</option>
+            <option data-i18n="ct.optPaisJP">Japão</option>
+            <option data-i18n="ct.optPaisLV">Letónia</option>
+            <option data-i18n="ct.optPaisLT">Lituânia</option>
+            <option data-i18n="ct.optPaisLU">Luxemburgo</option>
+            <option data-i18n="ct.optPaisMA">Marrocos</option>
+            <option data-i18n="ct.optPaisMX">México</option>
+            <option data-i18n="ct.optPaisNO">Noruega</option>
+            <option data-i18n="ct.optPaisNZ">Nova Zelândia</option>
+            <option data-i18n="ct.optPaisNL">Países Baixos</option>
+            <option data-i18n="ct.optPaisPE">Peru</option>
+            <option data-i18n="ct.optPaisPL">Polónia</option>
+            <option data-i18n="ct.optPaisGB">Reino Unido</option>
+            <option data-i18n="ct.optPaisCZ">República Checa</option>
+            <option data-i18n="ct.optPaisRO">Roménia</option>
+            <option data-i18n="ct.optPaisRU">Rússia</option>
+            <option data-i18n="ct.optPaisRS">Sérvia</option>
+            <option data-i18n="ct.optPaisSE">Suécia</option>
+            <option data-i18n="ct.optPaisCH">Suíça</option>
+            <option data-i18n="ct.optPaisTN">Tunísia</option>
+            <option data-i18n="ct.optPaisTR">Turquia</option>
+            <option data-i18n="ct.optPaisUA">Ucrânia</option>
+            <option data-i18n="ct.optPaisOutro">Outro país</option>
+          </select>
           <label data-i18n="ct.labelTelefone">Telefone</label><input id="ct-telefone" type="tel" required placeholder="O seu telefone (com indicativo)" data-i18n-placeholder="ct.placeholderTelefone">
           <label data-i18n="ct.labelInteresse">Assunto</label>
           <select id="ct-interesse"><option data-i18n="ct.optLongCanesFramboesa">Long Canes Framboesa</option><option data-i18n="ct.optGreenCanesFramboesa">Green Canes Framboesa</option><option data-i18n="ct.optLongCanesAmora">Long Canes Amora</option><option data-i18n="ct.optVisita">Agendamento de Visita</option><option data-i18n="ct.optOutro">Outro Assunto</option></select>
           <label data-i18n="ct.labelQuantidade">Quantidade pretendida</label><input id="ct-quantidade" type="number" min="0" step="1" inputmode="numeric" placeholder="Nº de plantas (opcional)" data-i18n-placeholder="ct.placeholderQuantidade">
-          <label data-i18n="ct.labelMensagem">Mensagem</label><textarea id="ct-mensagem" rows="4" placeholder="Conte-nos o que procura" data-i18n-placeholder="ct.placeholderMensagem"></textarea>
+          <label data-i18n="ct.labelMensagem">Mensagem</label><textarea id="ct-mensagem" rows="4" required minlength="10" placeholder="Conte-nos o que procura" data-i18n-placeholder="ct.placeholderMensagem"></textarea>
           <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true"><label for="ct-website">Website</label><input id="ct-website" type="text" tabindex="-1" autocomplete="off"></div>
           <button class="btn btn-primary" type="submit" id="ct-submit-btn" style="margin-top:20px;width:100%" data-i18n="ct.submit">Enviar pedido</button>
           <div class="form-ok" id="form-ok" data-i18n="ct.formOk">Obrigado! Entraremos em contacto brevemente.</div>
@@ -940,9 +996,62 @@ const I18N = {
   'ct.labelEmpresa':{pt:'Empresa',en:'Company',fr:'Entreprise'},
   'ct.placeholderEmpresa':{pt:'Nome da empresa (opcional)',en:'Company name (optional)',fr:'Nom de l\'entreprise (facultatif)'},
   'ct.labelCargo':{pt:'Cargo',en:'Job title',fr:'Poste'},
-  'ct.placeholderCargo':{pt:'O seu cargo na empresa',en:'Your job title',fr:'Votre poste dans l\'entreprise'},
+  'ct.placeholderCargo':{pt:'O seu cargo na empresa (opcional)',en:'Your job title (optional)',fr:'Votre poste dans l\'entreprise (facultatif)'},
   'ct.labelPais':{pt:'País',en:'Country',fr:'Pays'},
-  'ct.placeholderPais':{pt:'O seu país',en:'Your country',fr:'Votre pays'},
+  'ct.optPaisPlaceholder':{pt:'Selecione o país',en:'Select your country',fr:'Sélectionnez votre pays'},
+  'ct.optPaisPT':{pt:'Portugal',en:'Portugal',fr:'Portugal'},
+  'ct.optPaisZA':{pt:'África do Sul',en:'South Africa',fr:'Afrique du Sud'},
+  'ct.optPaisDE':{pt:'Alemanha',en:'Germany',fr:'Allemagne'},
+  'ct.optPaisDZ':{pt:'Argélia',en:'Algeria',fr:'Algérie'},
+  'ct.optPaisAR':{pt:'Argentina',en:'Argentina',fr:'Argentine'},
+  'ct.optPaisAU':{pt:'Austrália',en:'Australia',fr:'Australie'},
+  'ct.optPaisAT':{pt:'Áustria',en:'Austria',fr:'Autriche'},
+  'ct.optPaisBE':{pt:'Bélgica',en:'Belgium',fr:'Belgique'},
+  'ct.optPaisBR':{pt:'Brasil',en:'Brazil',fr:'Brésil'},
+  'ct.optPaisBG':{pt:'Bulgária',en:'Bulgaria',fr:'Bulgarie'},
+  'ct.optPaisCA':{pt:'Canadá',en:'Canada',fr:'Canada'},
+  'ct.optPaisCL':{pt:'Chile',en:'Chile',fr:'Chili'},
+  'ct.optPaisCN':{pt:'China',en:'China',fr:'Chine'},
+  'ct.optPaisCO':{pt:'Colômbia',en:'Colombia',fr:'Colombie'},
+  'ct.optPaisHR':{pt:'Croácia',en:'Croatia',fr:'Croatie'},
+  'ct.optPaisDK':{pt:'Dinamarca',en:'Denmark',fr:'Danemark'},
+  'ct.optPaisEG':{pt:'Egito',en:'Egypt',fr:'Égypte'},
+  'ct.optPaisSK':{pt:'Eslováquia',en:'Slovakia',fr:'Slovaquie'},
+  'ct.optPaisSI':{pt:'Eslovénia',en:'Slovenia',fr:'Slovénie'},
+  'ct.optPaisES':{pt:'Espanha',en:'Spain',fr:'Espagne'},
+  'ct.optPaisUS':{pt:'Estados Unidos',en:'United States',fr:'États-Unis'},
+  'ct.optPaisEE':{pt:'Estónia',en:'Estonia',fr:'Estonie'},
+  'ct.optPaisFI':{pt:'Finlândia',en:'Finland',fr:'Finlande'},
+  'ct.optPaisFR':{pt:'França',en:'France',fr:'France'},
+  'ct.optPaisGR':{pt:'Grécia',en:'Greece',fr:'Grèce'},
+  'ct.optPaisHU':{pt:'Hungria',en:'Hungary',fr:'Hongrie'},
+  'ct.optPaisIN':{pt:'Índia',en:'India',fr:'Inde'},
+  'ct.optPaisIE':{pt:'Irlanda',en:'Ireland',fr:'Irlande'},
+  'ct.optPaisIS':{pt:'Islândia',en:'Iceland',fr:'Islande'},
+  'ct.optPaisIL':{pt:'Israel',en:'Israel',fr:'Israël'},
+  'ct.optPaisIT':{pt:'Itália',en:'Italy',fr:'Italie'},
+  'ct.optPaisJP':{pt:'Japão',en:'Japan',fr:'Japon'},
+  'ct.optPaisLV':{pt:'Letónia',en:'Latvia',fr:'Lettonie'},
+  'ct.optPaisLT':{pt:'Lituânia',en:'Lithuania',fr:'Lituanie'},
+  'ct.optPaisLU':{pt:'Luxemburgo',en:'Luxembourg',fr:'Luxembourg'},
+  'ct.optPaisMA':{pt:'Marrocos',en:'Morocco',fr:'Maroc'},
+  'ct.optPaisMX':{pt:'México',en:'Mexico',fr:'Mexique'},
+  'ct.optPaisNO':{pt:'Noruega',en:'Norway',fr:'Norvège'},
+  'ct.optPaisNZ':{pt:'Nova Zelândia',en:'New Zealand',fr:'Nouvelle-Zélande'},
+  'ct.optPaisNL':{pt:'Países Baixos',en:'Netherlands',fr:'Pays-Bas'},
+  'ct.optPaisPE':{pt:'Peru',en:'Peru',fr:'Pérou'},
+  'ct.optPaisPL':{pt:'Polónia',en:'Poland',fr:'Pologne'},
+  'ct.optPaisGB':{pt:'Reino Unido',en:'United Kingdom',fr:'Royaume-Uni'},
+  'ct.optPaisCZ':{pt:'República Checa',en:'Czech Republic',fr:'République tchèque'},
+  'ct.optPaisRO':{pt:'Roménia',en:'Romania',fr:'Roumanie'},
+  'ct.optPaisRU':{pt:'Rússia',en:'Russia',fr:'Russie'},
+  'ct.optPaisRS':{pt:'Sérvia',en:'Serbia',fr:'Serbie'},
+  'ct.optPaisSE':{pt:'Suécia',en:'Sweden',fr:'Suède'},
+  'ct.optPaisCH':{pt:'Suíça',en:'Switzerland',fr:'Suisse'},
+  'ct.optPaisTN':{pt:'Tunísia',en:'Tunisia',fr:'Tunisie'},
+  'ct.optPaisTR':{pt:'Turquia',en:'Turkey',fr:'Turquie'},
+  'ct.optPaisUA':{pt:'Ucrânia',en:'Ukraine',fr:'Ukraine'},
+  'ct.optPaisOutro':{pt:'Outro país',en:'Other country',fr:'Autre pays'},
   'ct.labelTelefone':{pt:'Telefone',en:'Phone',fr:'Téléphone'},
   'ct.placeholderTelefone':{pt:'O seu telefone (com indicativo)',en:'Your phone number (with country code)',fr:'Votre numéro de téléphone (avec indicatif)'},
   'ct.labelInteresse':{pt:'Assunto',en:'Subject',fr:'Sujet'},
@@ -960,8 +1069,9 @@ const I18N = {
   'ct.formOk':{pt:'Obrigado! Entraremos em contacto brevemente.',en:'Thank you! We\'ll be in touch shortly.',fr:'Merci ! Nous vous recontacterons prochainement.'},
   'ct.formError':{pt:'Não foi possível enviar o pedido. Tente novamente ou contacte-nos diretamente por email.',en:'We couldn\'t send your request. Please try again or contact us directly by email.',fr:'Nous n\'avons pas pu envoyer votre demande. Veuillez réessayer ou nous contacter directement par e-mail.'},
   'ct.errQuantidade':{pt:'A quantidade pretendida tem de ser um número igual ou superior a 0.',en:'The requested quantity must be a number of 0 or more.',fr:'La quantité souhaitée doit être un nombre égal ou supérieur à 0.'},
-  'ct.errObrigatorios':{pt:'Preencha todos os campos obrigatórios (Nome, Email, Cargo, País, Telefone e Mensagem).',en:'Please fill in all required fields (Name, Email, Job title, Country, Phone and Message).',fr:'Veuillez remplir tous les champs obligatoires (Nom, E-mail, Poste, Pays, Téléphone et Message).'},
+  'ct.errObrigatorios':{pt:'Preencha todos os campos obrigatórios (Nome, Email, País, Telefone e Mensagem).',en:'Please fill in all required fields (Name, Email, Country, Phone and Message).',fr:'Veuillez remplir tous les champs obligatoires (Nom, E-mail, Pays, Téléphone et Message).'},
   'ct.errEmail':{pt:'Introduza um endereço de email válido.',en:'Please enter a valid email address.',fr:'Veuillez saisir une adresse e-mail valide.'},
+  'ct.errMensagem':{pt:'Escreva uma mensagem com pelo menos 10 caracteres, para percebermos o que procura.',en:'Please write a message of at least 10 characters, so we understand what you\'re looking for.',fr:'Veuillez écrire un message d\'au moins 10 caractères, afin que nous comprenions votre demande.'},
 
   'footer.tagline':{pt:'Plantas de elevada qualidade, produzidas no Norte de Portugal com respeito pela natureza!',en:'High-quality plants, grown in Northern Portugal with respect for nature!',fr:'Des plants de haute qualité, produits dans le nord du Portugal dans le respect de la nature !'},
   'footer.certBadge':{pt:'Certificado GLOBAL G.A.P. e GRASP',en:'GLOBAL G.A.P. and GRASP certified',fr:'Certifié GLOBAL G.A.P. et GRASP'},
@@ -1158,11 +1268,12 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
     website: document.getElementById('ct-website').value // honeypot — deve ficar vazio
   };
 
-  // Verificação explícita dos campos obrigatórios (Nome, Email, Cargo, País,
-  // Telefone, Mensagem) — segunda linha de defesa, independente da validação
-  // nativa do browser (atributo "required" nos inputs) e da validação do
-  // próprio worker (que só exige Nome/Email/Mensagem).
-  const camposObrigatorios = ['nome', 'email', 'cargo', 'pais', 'telefone', 'mensagem'];
+  // Verificação explícita dos campos obrigatórios (Nome, Email, País,
+  // Telefone, Mensagem — Cargo e Empresa são opcionais) — segunda linha de
+  // defesa, independente da validação nativa do browser (atributos
+  // "required"/"minlength") e da validação do próprio worker (que só exige
+  // Nome/Email/Mensagem).
+  const camposObrigatorios = ['nome', 'email', 'pais', 'telefone', 'mensagem'];
   if (camposObrigatorios.some(campo => !payload[campo])) {
     errBox.textContent = t('ct.errObrigatorios');
     errBox.style.display = 'block';
@@ -1170,6 +1281,11 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
     errBox.textContent = t('ct.errEmail');
+    errBox.style.display = 'block';
+    return;
+  }
+  if (payload.mensagem.length < 10) {
+    errBox.textContent = t('ct.errMensagem');
     errBox.style.display = 'block';
     return;
   }
