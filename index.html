@@ -629,10 +629,6 @@
         <h2 style="font-size:1.7rem;margin-bottom:18px" data-i18n="ct.faleConnosco">Fale connosco</h2>
         <p style="color:var(--ink-soft)"><b data-i18n="ct.emailLabel">Email:</b> <a href="mailto:acss.agricultura@gmail.com" data-i18n="ct.emailPlaceholder">acss.agricultura@gmail.com</a><br><b data-i18n="ct.telefoneLabel">Telefone:</b> <a href="tel:+351916286989" data-i18n="ct.telefonePlaceholder">+351 916 286 989</a><br><b data-i18n="ct.horarioLabel">Horário:</b> <span data-i18n="ct.horarioValue">09:00 às 17:00 (GMT)</span></p>
         <p style="color:var(--ink-soft);margin-top:16px" data-i18n="ct.p2">Apoiamos os nossos clientes em todo o processo — da escolha das variedades, aquisição de plantas, crescimento das plantas, logística de frio e envio</p>
-        <div class="hero-badge" style="background:var(--verde-100);color:var(--verde-800);margin-top:24px">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
-          <span data-i18n="badge.certificacao">Certificação GLOBAL G.A.P.</span>
-        </div>
       </div>
       <div class="form-card">
         <h3 data-i18n="ct.formTitle">Agende a sua reunião</h3>
@@ -640,8 +636,12 @@
           <label data-i18n="ct.labelNome">Nome</label><input id="ct-nome" type="text" required placeholder="O seu nome" data-i18n-placeholder="ct.placeholderNome">
           <label data-i18n="ct.labelEmail">Email</label><input id="ct-email" type="email" required placeholder="oseu@email.com" data-i18n-placeholder="ct.placeholderEmail">
           <label data-i18n="ct.labelEmpresa">Empresa</label><input id="ct-empresa" type="text" placeholder="Nome da empresa (opcional)" data-i18n-placeholder="ct.placeholderEmpresa">
-          <label data-i18n="ct.labelInteresse">Interesse</label>
-          <select id="ct-interesse"><option data-i18n="ct.optRaspberry">Long Canes Framboesa</option><option data-i18n="ct.optBlackberry">Long Canes Amora</option><option data-i18n="ct.optVisita">Visita</option><option data-i18n="ct.optOutro">Outro assunto</option></select>
+          <label data-i18n="ct.labelCargo">Cargo</label><input id="ct-cargo" type="text" required placeholder="O seu cargo na empresa" data-i18n-placeholder="ct.placeholderCargo">
+          <label data-i18n="ct.labelPais">País</label><input id="ct-pais" type="text" required placeholder="O seu país" data-i18n-placeholder="ct.placeholderPais">
+          <label data-i18n="ct.labelTelefone">Telefone</label><input id="ct-telefone" type="tel" required placeholder="O seu telefone (com indicativo)" data-i18n-placeholder="ct.placeholderTelefone">
+          <label data-i18n="ct.labelInteresse">Produto de interesse</label>
+          <select id="ct-interesse"><option data-i18n="ct.optRaspberry">Framboesa</option><option data-i18n="ct.optBlackberry">Amora</option><option data-i18n="ct.optAmbos">Ambos</option><option data-i18n="ct.optOutro">Outro</option></select>
+          <label data-i18n="ct.labelQuantidade">Quantidade pretendida</label><input id="ct-quantidade" type="number" min="0" step="1" inputmode="numeric" placeholder="Nº de plantas (opcional)" data-i18n-placeholder="ct.placeholderQuantidade">
           <label data-i18n="ct.labelMensagem">Mensagem</label><textarea id="ct-mensagem" rows="4" placeholder="Conte-nos o que procura" data-i18n-placeholder="ct.placeholderMensagem"></textarea>
           <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true"><label for="ct-website">Website</label><input id="ct-website" type="text" tabindex="-1" autocomplete="off"></div>
           <button class="btn btn-primary" type="submit" id="ct-submit-btn" style="margin-top:20px;width:100%" data-i18n="ct.submit">Enviar pedido</button>
@@ -830,8 +830,6 @@ const I18N = {
   'nav.variedades':{pt:'Variedades',en:'Varieties',fr:'Variétés'},
   'nav.ondeEstamos':{pt:'Onde Estamos',en:'Where We Are',fr:'Où nous sommes'},
   'nav.contactos':{pt:'Contactos',en:'Contact',fr:'Contact'},
-
-  'badge.certificacao':{pt:'Certificação GLOBAL G.A.P.',en:'GLOBAL G.A.P. Certified',fr:'Certification GLOBAL G.A.P.'},
   'home.parceirosEyebrow2':{pt:'Clientes e Parceiros de Referência',en:'Clients and Reference Partners',fr:'Clients et Partenaires de Référence'},'home.parceirosDesc':{pt:'Trabalhamos com alguns dos maiores produtores nacionais e internacionais assim como os <em>breeders</em> das melhores variedades de forma a servir os nossos clientes com a máxima qualidade.',en:'We work with some of the largest national and international growers, as well as the <em>breeders</em> behind the best varieties, to serve our clients with the highest quality.',fr:'Nous travaillons avec certains des plus grands producteurs nationaux et internationaux, ainsi qu\'avec les <em>breeders</em> des meilleures variétés, afin de servir nos clients avec la plus haute qualité.'},
 
   'home.eyebrow':{pt:'Norte de Portugal · Viveiros de pequenos frutos',en:'Northern Portugal · Berry Plant Nurseries',fr:'Nord du Portugal · Pépinières de petits fruits'},
@@ -941,17 +939,26 @@ const I18N = {
   'ct.placeholderEmail':{pt:'oseu@email.com',en:'your@email.com',fr:'votre@email.com'},
   'ct.labelEmpresa':{pt:'Empresa',en:'Company',fr:'Entreprise'},
   'ct.placeholderEmpresa':{pt:'Nome da empresa (opcional)',en:'Company name (optional)',fr:'Nom de l\'entreprise (facultatif)'},
-  'ct.labelInteresse':{pt:'Interesse',en:'Interest',fr:'Intérêt'},
-  'ct.optRaspberry':{pt:'Long Canes Framboesa',en:'Raspberry Long Canes',fr:'Long Canes Framboisier'},
-  'ct.optBlackberry':{pt:'Long Canes Amora',en:'Blackberry Long Canes',fr:'Long Canes Mûrier'},
-  'ct.optVisita':{pt:'Visita',en:'Visit',fr:'Visite'},
-  'ct.optOutro':{pt:'Outro assunto',en:'Other',fr:'Autre sujet'},
+  'ct.labelCargo':{pt:'Cargo',en:'Job title',fr:'Poste'},
+  'ct.placeholderCargo':{pt:'O seu cargo na empresa',en:'Your job title',fr:'Votre poste dans l\'entreprise'},
+  'ct.labelPais':{pt:'País',en:'Country',fr:'Pays'},
+  'ct.placeholderPais':{pt:'O seu país',en:'Your country',fr:'Votre pays'},
+  'ct.labelTelefone':{pt:'Telefone',en:'Phone',fr:'Téléphone'},
+  'ct.placeholderTelefone':{pt:'O seu telefone (com indicativo)',en:'Your phone number (with country code)',fr:'Votre numéro de téléphone (avec indicatif)'},
+  'ct.labelInteresse':{pt:'Produto de interesse',en:'Product of interest',fr:'Produit d\'intérêt'},
+  'ct.optRaspberry':{pt:'Framboesa',en:'Raspberry',fr:'Framboise'},
+  'ct.optBlackberry':{pt:'Amora',en:'Blackberry',fr:'Mûre'},
+  'ct.optAmbos':{pt:'Ambos',en:'Both',fr:'Les deux'},
+  'ct.optOutro':{pt:'Outro',en:'Other',fr:'Autre'},
+  'ct.labelQuantidade':{pt:'Quantidade pretendida',en:'Requested quantity',fr:'Quantité souhaitée'},
+  'ct.placeholderQuantidade':{pt:'Nº de plantas (opcional)',en:'Number of plants (optional)',fr:'Nombre de plants (facultatif)'},
   'ct.labelMensagem':{pt:'Mensagem',en:'Message',fr:'Message'},
   'ct.placeholderMensagem':{pt:'Conte-nos o que procura',en:'Tell us what you\'re looking for',fr:'Dites-nous ce que vous recherchez'},
   'ct.submit':{pt:'Enviar pedido',en:'Send request',fr:'Envoyer la demande'},
   'ct.sending':{pt:'A enviar…',en:'Sending…',fr:'Envoi en cours…'},
   'ct.formOk':{pt:'Obrigado! Entraremos em contacto brevemente.',en:'Thank you! We\'ll be in touch shortly.',fr:'Merci ! Nous vous recontacterons prochainement.'},
   'ct.formError':{pt:'Não foi possível enviar o pedido. Tente novamente ou contacte-nos diretamente por email.',en:'We couldn\'t send your request. Please try again or contact us directly by email.',fr:'Nous n\'avons pas pu envoyer votre demande. Veuillez réessayer ou nous contacter directement par e-mail.'},
+  'ct.errQuantidade':{pt:'A quantidade pretendida tem de ser um número igual ou superior a 0.',en:'The requested quantity must be a number of 0 or more.',fr:'La quantité souhaitée doit être un nombre égal ou supérieur à 0.'},
 
   'footer.tagline':{pt:'Plantas de elevada qualidade, produzidas no Norte de Portugal com respeito pela natureza!',en:'High-quality plants, grown in Northern Portugal with respect for nature!',fr:'Des plants de haute qualité, produits dans le nord du Portugal dans le respect de la nature !'},
   'footer.certBadge':{pt:'Certificado GLOBAL G.A.P. e GRASP',en:'GLOBAL G.A.P. and GRASP certified',fr:'Certifié GLOBAL G.A.P. et GRASP'},
@@ -1137,11 +1144,23 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
   okBox.style.display = 'none';
   errBox.style.display = 'none';
 
+  const quantidadeRaw = document.getElementById('ct-quantidade').value.trim();
+  if (quantidadeRaw !== '' && (!/^\d+$/.test(quantidadeRaw) || Number(quantidadeRaw) < 0)) {
+    errBox.textContent = t('ct.errQuantidade');
+    errBox.style.display = 'block';
+    return;
+  }
+  errBox.textContent = t('ct.formError');
+
   const payload = {
     nome: document.getElementById('ct-nome').value.trim(),
     email: document.getElementById('ct-email').value.trim(),
     empresa: document.getElementById('ct-empresa').value.trim(),
+    cargo: document.getElementById('ct-cargo').value.trim(),
+    pais: document.getElementById('ct-pais').value.trim(),
+    telefone: document.getElementById('ct-telefone').value.trim(),
     interesse: document.getElementById('ct-interesse').value,
+    quantidade: quantidadeRaw,
     mensagem: document.getElementById('ct-mensagem').value.trim(),
     website: document.getElementById('ct-website').value // honeypot — deve ficar vazio
   };
