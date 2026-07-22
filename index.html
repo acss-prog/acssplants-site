@@ -1134,7 +1134,7 @@ document.getElementById('hamb').addEventListener('click',()=>document.getElement
 /* URL do Cloudflare Worker que envia o email via Resend.
    Substituir por: https://acss-contact-form.<o-teu-subdominio>.workers.dev
    (fica visível depois de correr "wrangler deploy" — ver worker/README.md) */
-const CONTACT_FORM_ENDPOINT = 'https://acss-contact-form.YOUR-SUBDOMAIN.workers.dev';
+const CONTACT_FORM_ENDPOINT = 'https://acss-contact-form.registo-acss.workers.dev';
 
 document.getElementById('contact-form').addEventListener('submit', async e => {
   e.preventDefault();
