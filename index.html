@@ -639,8 +639,8 @@
           <label data-i18n="ct.labelCargo">Cargo</label><input id="ct-cargo" type="text" required placeholder="O seu cargo na empresa" data-i18n-placeholder="ct.placeholderCargo">
           <label data-i18n="ct.labelPais">País</label><input id="ct-pais" type="text" required placeholder="O seu país" data-i18n-placeholder="ct.placeholderPais">
           <label data-i18n="ct.labelTelefone">Telefone</label><input id="ct-telefone" type="tel" required placeholder="O seu telefone (com indicativo)" data-i18n-placeholder="ct.placeholderTelefone">
-          <label data-i18n="ct.labelInteresse">Produto de interesse</label>
-          <select id="ct-interesse"><option data-i18n="ct.optRaspberry">Framboesa</option><option data-i18n="ct.optBlackberry">Amora</option><option data-i18n="ct.optAmbos">Ambos</option><option data-i18n="ct.optOutro">Outro</option></select>
+          <label data-i18n="ct.labelInteresse">Assunto</label>
+          <select id="ct-interesse"><option data-i18n="ct.optLongCanesFramboesa">Long Canes Framboesa</option><option data-i18n="ct.optGreenCanesFramboesa">Green Canes Framboesa</option><option data-i18n="ct.optLongCanesAmora">Long Canes Amora</option><option data-i18n="ct.optVisita">Agendamento de Visita</option><option data-i18n="ct.optOutro">Outro Assunto</option></select>
           <label data-i18n="ct.labelQuantidade">Quantidade pretendida</label><input id="ct-quantidade" type="number" min="0" step="1" inputmode="numeric" placeholder="Nº de plantas (opcional)" data-i18n-placeholder="ct.placeholderQuantidade">
           <label data-i18n="ct.labelMensagem">Mensagem</label><textarea id="ct-mensagem" rows="4" placeholder="Conte-nos o que procura" data-i18n-placeholder="ct.placeholderMensagem"></textarea>
           <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true"><label for="ct-website">Website</label><input id="ct-website" type="text" tabindex="-1" autocomplete="off"></div>
@@ -945,11 +945,12 @@ const I18N = {
   'ct.placeholderPais':{pt:'O seu país',en:'Your country',fr:'Votre pays'},
   'ct.labelTelefone':{pt:'Telefone',en:'Phone',fr:'Téléphone'},
   'ct.placeholderTelefone':{pt:'O seu telefone (com indicativo)',en:'Your phone number (with country code)',fr:'Votre numéro de téléphone (avec indicatif)'},
-  'ct.labelInteresse':{pt:'Produto de interesse',en:'Product of interest',fr:'Produit d\'intérêt'},
-  'ct.optRaspberry':{pt:'Framboesa',en:'Raspberry',fr:'Framboise'},
-  'ct.optBlackberry':{pt:'Amora',en:'Blackberry',fr:'Mûre'},
-  'ct.optAmbos':{pt:'Ambos',en:'Both',fr:'Les deux'},
-  'ct.optOutro':{pt:'Outro',en:'Other',fr:'Autre'},
+  'ct.labelInteresse':{pt:'Assunto',en:'Subject',fr:'Sujet'},
+  'ct.optLongCanesFramboesa':{pt:'Long Canes Framboesa',en:'Raspberry Long Canes',fr:'Long Canes Framboisier'},
+  'ct.optGreenCanesFramboesa':{pt:'Green Canes Framboesa',en:'Raspberry Green Canes',fr:'Green Canes Framboisier'},
+  'ct.optLongCanesAmora':{pt:'Long Canes Amora',en:'Blackberry Long Canes',fr:'Long Canes Mûrier'},
+  'ct.optVisita':{pt:'Agendamento de Visita',en:'Schedule a Visit',fr:'Planifier une visite'},
+  'ct.optOutro':{pt:'Outro Assunto',en:'Other Subject',fr:'Autre sujet'},
   'ct.labelQuantidade':{pt:'Quantidade pretendida',en:'Requested quantity',fr:'Quantité souhaitée'},
   'ct.placeholderQuantidade':{pt:'Nº de plantas (opcional)',en:'Number of plants (optional)',fr:'Nombre de plants (facultatif)'},
   'ct.labelMensagem':{pt:'Mensagem',en:'Message',fr:'Message'},
@@ -1131,9 +1132,7 @@ document.getElementById('lang-switch').addEventListener('click', e=>{
 
 /* ============ MISC ============ */
 document.getElementById('hamb').addEventListener('click',()=>document.getElementById('menu').classList.toggle('open'));
-/* URL do Cloudflare Worker que envia o email via Resend.
-   Substituir por: https://acss-contact-form.<o-teu-subdominio>.workers.dev
-   (fica visível depois de correr "wrangler deploy" — ver worker/README.md) */
+/* URL do Cloudflare Worker que envia o email via Resend. */
 const CONTACT_FORM_ENDPOINT = 'https://acss-contact-form.registo-acss.workers.dev';
 
 document.getElementById('contact-form').addEventListener('submit', async e => {
