@@ -200,6 +200,8 @@
   .form-card input,.form-card textarea,.form-card select{width:100%;padding:12px 14px;border:1.5px solid #ddd6c6;border-radius:10px;font-family:var(--sans);font-size:.95rem;background:var(--creme)}
   .form-card input:focus,.form-card textarea:focus{outline:none;border-color:var(--verde-600)}
   .form-ok{display:none;margin-top:16px;background:var(--verde-100);color:var(--verde-800);padding:12px 16px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .form-error{display:none;margin-top:16px;background:#fbe3e3;color:#8a2c2c;padding:12px 16px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .btn[disabled]{opacity:.65;cursor:not-allowed}
 
   /* ---------- CTA band ---------- */
   .cta-band{background:linear-gradient(140deg,var(--framboesa),var(--framboesa-escuro));border-radius:var(--radius);color:#fff;padding:52px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
@@ -635,14 +637,16 @@
       <div class="form-card">
         <h3 data-i18n="ct.formTitle">Agende a sua reunião</h3>
         <form id="contact-form">
-          <label data-i18n="ct.labelNome">Nome</label><input type="text" required placeholder="O seu nome" data-i18n-placeholder="ct.placeholderNome">
-          <label data-i18n="ct.labelEmail">Email</label><input type="email" required placeholder="oseu@email.com" data-i18n-placeholder="ct.placeholderEmail">
-          <label data-i18n="ct.labelEmpresa">Empresa</label><input type="text" placeholder="Nome da empresa (opcional)" data-i18n-placeholder="ct.placeholderEmpresa">
+          <label data-i18n="ct.labelNome">Nome</label><input id="ct-nome" type="text" required placeholder="O seu nome" data-i18n-placeholder="ct.placeholderNome">
+          <label data-i18n="ct.labelEmail">Email</label><input id="ct-email" type="email" required placeholder="oseu@email.com" data-i18n-placeholder="ct.placeholderEmail">
+          <label data-i18n="ct.labelEmpresa">Empresa</label><input id="ct-empresa" type="text" placeholder="Nome da empresa (opcional)" data-i18n-placeholder="ct.placeholderEmpresa">
           <label data-i18n="ct.labelInteresse">Interesse</label>
-          <select><option data-i18n="ct.optRaspberry">Long Canes Framboesa</option><option data-i18n="ct.optBlackberry">Long Canes Amora</option><option data-i18n="ct.optVisita">Visita</option><option data-i18n="ct.optOutro">Outro assunto</option></select>
-          <label data-i18n="ct.labelMensagem">Mensagem</label><textarea rows="4" placeholder="Conte-nos o que procura" data-i18n-placeholder="ct.placeholderMensagem"></textarea>
-          <button class="btn btn-primary" type="submit" style="margin-top:20px;width:100%" data-i18n="ct.submit">Enviar pedido</button>
-          <div class="form-ok" id="form-ok" data-i18n="ct.formOk">Obrigado! Entraremos em contacto brevemente. (Nota: este formulário é demonstrativo — é preciso ligá-lo a um serviço de email.)</div>
+          <select id="ct-interesse"><option data-i18n="ct.optRaspberry">Long Canes Framboesa</option><option data-i18n="ct.optBlackberry">Long Canes Amora</option><option data-i18n="ct.optVisita">Visita</option><option data-i18n="ct.optOutro">Outro assunto</option></select>
+          <label data-i18n="ct.labelMensagem">Mensagem</label><textarea id="ct-mensagem" rows="4" placeholder="Conte-nos o que procura" data-i18n-placeholder="ct.placeholderMensagem"></textarea>
+          <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true"><label for="ct-website">Website</label><input id="ct-website" type="text" tabindex="-1" autocomplete="off"></div>
+          <button class="btn btn-primary" type="submit" id="ct-submit-btn" style="margin-top:20px;width:100%" data-i18n="ct.submit">Enviar pedido</button>
+          <div class="form-ok" id="form-ok" data-i18n="ct.formOk">Obrigado! Entraremos em contacto brevemente.</div>
+          <div class="form-error" id="form-error" data-i18n="ct.formError">Não foi possível enviar o pedido. Tente novamente ou contacte-nos diretamente por email.</div>
         </form>
       </div>
     </div>
@@ -945,7 +949,9 @@ const I18N = {
   'ct.labelMensagem':{pt:'Mensagem',en:'Message',fr:'Message'},
   'ct.placeholderMensagem':{pt:'Conte-nos o que procura',en:'Tell us what you\'re looking for',fr:'Dites-nous ce que vous recherchez'},
   'ct.submit':{pt:'Enviar pedido',en:'Send request',fr:'Envoyer la demande'},
-  'ct.formOk':{pt:'Obrigado! Entraremos em contacto brevemente. (Nota: este formulário é demonstrativo — é preciso ligá-lo a um serviço de email.)',en:'Thank you! We\'ll be in touch shortly. (Note: this form is a demo — it needs to be connected to an email service.)',fr:'Merci ! Nous vous recontacterons prochainement. (Remarque : ce formulaire est une démonstration — il doit être connecté à un service d\'e-mail.)'},
+  'ct.sending':{pt:'A enviar…',en:'Sending…',fr:'Envoi en cours…'},
+  'ct.formOk':{pt:'Obrigado! Entraremos em contacto brevemente.',en:'Thank you! We\'ll be in touch shortly.',fr:'Merci ! Nous vous recontacterons prochainement.'},
+  'ct.formError':{pt:'Não foi possível enviar o pedido. Tente novamente ou contacte-nos diretamente por email.',en:'We couldn\'t send your request. Please try again or contact us directly by email.',fr:'Nous n\'avons pas pu envoyer votre demande. Veuillez réessayer ou nous contacter directement par e-mail.'},
 
   'footer.tagline':{pt:'Plantas de elevada qualidade, produzidas no Norte de Portugal com respeito pela natureza!',en:'High-quality plants, grown in Northern Portugal with respect for nature!',fr:'Des plants de haute qualité, produits dans le nord du Portugal dans le respect de la nature !'},
   'footer.certBadge':{pt:'Certificado GLOBAL G.A.P. e GRASP',en:'GLOBAL G.A.P. and GRASP certified',fr:'Certifié GLOBAL G.A.P. et GRASP'},
@@ -1118,9 +1124,47 @@ document.getElementById('lang-switch').addEventListener('click', e=>{
 
 /* ============ MISC ============ */
 document.getElementById('hamb').addEventListener('click',()=>document.getElementById('menu').classList.toggle('open'));
-document.getElementById('contact-form').addEventListener('submit',e=>{
+/* URL do Cloudflare Worker que envia o email via Resend.
+   Substituir por: https://acss-contact-form.<o-teu-subdominio>.workers.dev
+   (fica visível depois de correr "wrangler deploy" — ver worker/README.md) */
+const CONTACT_FORM_ENDPOINT = 'https://acss-contact-form.YOUR-SUBDOMAIN.workers.dev';
+
+document.getElementById('contact-form').addEventListener('submit', async e => {
   e.preventDefault();
-  document.getElementById('form-ok').style.display='block';
+  const okBox = document.getElementById('form-ok');
+  const errBox = document.getElementById('form-error');
+  const btn = document.getElementById('ct-submit-btn');
+  okBox.style.display = 'none';
+  errBox.style.display = 'none';
+
+  const payload = {
+    nome: document.getElementById('ct-nome').value.trim(),
+    email: document.getElementById('ct-email').value.trim(),
+    empresa: document.getElementById('ct-empresa').value.trim(),
+    interesse: document.getElementById('ct-interesse').value,
+    mensagem: document.getElementById('ct-mensagem').value.trim(),
+    website: document.getElementById('ct-website').value // honeypot — deve ficar vazio
+  };
+
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = t('ct.sending');
+
+  try {
+    const resp = await fetch(CONTACT_FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) throw new Error('request failed');
+    okBox.style.display = 'block';
+    e.target.reset();
+  } catch (err) {
+    errBox.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
 });
 document.getElementById('ano').textContent = new Date().getFullYear();
 
