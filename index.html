@@ -2101,7 +2101,7 @@ menuScrim.addEventListener('click',()=>setMenuState(false));
 menu.addEventListener('click',e=>{if(e.target.closest('a')) setMenuState(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape') setMenuState(false)});
 window.addEventListener('resize',()=>{if(window.innerWidth>920) setMenuState(false)});
-/* Endpoint local do servidor Node que envia o email via SMTP. */
+/* Endpoint local do servidor Python que envia o email via MailerSend/SMTP. */
 const CONTACT_FORM_ENDPOINT = '/api/contact';
 
 document.getElementById('contact-form').addEventListener('submit', async e => {

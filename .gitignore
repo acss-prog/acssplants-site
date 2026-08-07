@@ -1,2 +1,3 @@
 # ShipStudio metadata
 .shipstudio/
+.env

@@ -14,6 +14,8 @@ import time
 from email.message import EmailMessage
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib import error as urlerror
+from urllib import request as urlrequest
 from urllib.parse import unquote, urlparse
 
 
@@ -37,6 +39,9 @@ load_env_file(ROOT / ".env")
 PORT = int(os.getenv("PORT", "3000"))
 MAIL_TO = os.getenv("MAIL_TO", "acss.agricultura@gmail.com")
 MAIL_FROM = os.getenv("MAIL_FROM", os.getenv("SMTP_USER", ""))
+MAILERSEND_API_TOKEN = os.getenv("MAILERSEND_API_TOKEN", "")
+MAILERSEND_FROM_EMAIL = os.getenv("MAILERSEND_FROM_EMAIL", MAIL_FROM)
+MAILERSEND_FROM_NAME = os.getenv("MAILERSEND_FROM_NAME", "ACSS Plants")
 SMTP_HOST = os.getenv("SMTP_HOST", "")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER = os.getenv("SMTP_USER", "")
@@ -80,10 +85,7 @@ def rate_limited(ip):
     return False
 
 
-def send_contact_email(data):
-    if not SMTP_HOST or not MAIL_FROM:
-        raise RuntimeError("SMTP is not configured")
-
+def contact_message(data):
     subject = f"Novo pedido de contacto — {data['nome']}"
     lines = [
         "Novo pedido de contacto através do site ACSS Plants",
@@ -100,6 +102,47 @@ def send_contact_email(data):
         "Mensagem:",
         data["mensagem"],
     ]
+    return subject, lines
+
+
+def send_with_mailersend(data):
+    if not MAILERSEND_API_TOKEN or not MAILERSEND_FROM_EMAIL:
+        raise RuntimeError("MailerSend is not configured")
+
+    subject, lines = contact_message(data)
+    payload = {
+        "from": {"email": MAILERSEND_FROM_EMAIL, "name": MAILERSEND_FROM_NAME},
+        "to": [{"email": MAIL_TO, "name": "ACSS Plants"}],
+        "reply_to": {"email": data["email"], "name": data["nome"]},
+        "subject": subject,
+        "text": "\n".join(lines),
+    }
+    request = urlrequest.Request(
+        "https://api.mailersend.com/v1/email",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {MAILERSEND_API_TOKEN}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urlrequest.urlopen(request, timeout=20) as response:
+            if response.status not in (200, 202):
+                raise RuntimeError(f"MailerSend returned HTTP {response.status}")
+    except urlerror.HTTPError as error:
+        detail = error.read().decode("utf-8", errors="replace")[:500]
+        raise RuntimeError(f"MailerSend returned HTTP {error.code}: {detail}") from error
+    except urlerror.URLError as error:
+        raise RuntimeError(f"MailerSend connection failed: {error.reason}") from error
+
+
+def send_with_smtp(data):
+    if not SMTP_HOST or not MAIL_FROM:
+        raise RuntimeError("SMTP is not configured")
+
+    subject, lines = contact_message(data)
 
     message = EmailMessage()
     message["Subject"] = subject
@@ -122,6 +165,13 @@ def send_contact_email(data):
             if SMTP_USER:
                 smtp.login(SMTP_USER, SMTP_PASS)
             smtp.send_message(message)
+
+
+def send_contact_email(data):
+    if MAILERSEND_API_TOKEN:
+        send_with_mailersend(data)
+        return
+    send_with_smtp(data)
 
 
 class ACSSHandler(BaseHTTPRequestHandler):
@@ -213,6 +263,6 @@ class ACSSHandler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     print(f"ACSS server listening on http://0.0.0.0:{PORT}")
-    if not SMTP_HOST:
-        print("Warning: SMTP_HOST is not set; /api/contact will return 500 until SMTP is configured.")
+    if not MAILERSEND_API_TOKEN and not SMTP_HOST:
+        print("Warning: MailerSend and SMTP are not configured; /api/contact will return 500 until email delivery is configured.")
     ThreadingHTTPServer(("0.0.0.0", PORT), ACSSHandler).serve_forever()
