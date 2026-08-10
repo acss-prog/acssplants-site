@@ -2101,8 +2101,12 @@ menuScrim.addEventListener('click',()=>setMenuState(false));
 menu.addEventListener('click',e=>{if(e.target.closest('a')) setMenuState(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape') setMenuState(false)});
 window.addEventListener('resize',()=>{if(window.innerWidth>920) setMenuState(false)});
-/* Endpoint local do servidor Node que envia o email via MailerSend. */
-const CONTACT_FORM_ENDPOINT = '/api/contact';
+/* Web3Forms encaminha o formulário para MAIL_TO sem servidor próprio.
+   Obter a access key em https://web3forms.com (grátis, só pede um email).
+   A chave é pública por design — é um identificador de destino, não um
+   segredo; a proteção contra spam é feita pelo Web3Forms + honeypot. */
+const WEB3FORMS_ACCESS_KEY = 'fc2fb04a-8d5c-413c-b778-3d25cc07b81e';
+const CONTACT_FORM_ENDPOINT = 'https://api.web3forms.com/submit';
 
 document.getElementById('contact-form').addEventListener('submit', async e => {
   e.preventDefault();
@@ -2157,16 +2161,37 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
   btn.disabled = true;
   btn.textContent = t('ct.sending');
 
+  /* Campos com nomes legíveis — o Web3Forms usa as chaves tal e qual no
+     corpo do email, por isso valem mais em português do que em snake_case. */
+  const envio = {
+    access_key: WEB3FORMS_ACCESS_KEY,
+    subject: `Novo pedido de contacto — ${payload.nome}`,
+    from_name: 'Site ACSS Plants',
+    replyto: payload.email,
+    botcheck: payload.website,           // honeypot: preenchido = bot
+    Nome: payload.nome,
+    Email: payload.email,
+    Empresa: payload.empresa || '—',
+    Cargo: payload.cargo || '—',
+    País: payload.pais,
+    Telefone: payload.telefone,
+    Interesse: payload.interesse || '—',
+    Quantidade: payload.quantidade || '—',
+    Mensagem: payload.mensagem
+  };
+
   try {
     const resp = await fetch(CONTACT_FORM_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(envio)
     });
-    if (!resp.ok) throw new Error('request failed');
+    const result = await resp.json().catch(() => ({}));
+    if (!resp.ok || !result.success) throw new Error(result.message || 'request failed');
     okBox.style.display = 'block';
     e.target.reset();
   } catch (err) {
+    console.error('Envio do formulário falhou:', err.message);
     errBox.style.display = 'block';
   } finally {
     btn.disabled = false;

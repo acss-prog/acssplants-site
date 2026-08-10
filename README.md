@@ -1,52 +1,43 @@
 # acssplants-site
 Novo Site da ACSS
 
-## Run locally
+The site is a single static `index.html`. There is no build step and no server to
+run — open the file, or serve the folder with any static file server.
 
-Requires Node.js 18 or newer. Configure MailerSend in `.env` and start the static site plus contact endpoint with:
+## Contact form
 
-```bash
-npm start
-```
+The form posts directly to [Web3Forms](https://web3forms.com), which forwards each
+enquiry to the address registered with the access key. No backend, no DNS setup.
 
-Open `http://localhost:3000`. The MailerSend API token is read only by the server and is never exposed to the browser.
+The access key lives in `index.html` as `WEB3FORMS_ACCESS_KEY`. It is public by
+design — it identifies the destination inbox rather than granting access to
+anything, and spam is filtered by Web3Forms plus the form's hidden honeypot field
+(`ct-website`, mapped to Web3Forms' `botcheck`).
 
-## Verify the sending domain
+To change the destination inbox, generate a new key at web3forms.com and replace
+that constant.
 
-MailerSend refuses to send unless `MAILERSEND_FROM_EMAIL` sits on a domain verified
-in the account. A gmail.com / outlook.com address can never be verified — it fails with:
+### Testing it
 
-```
-HTTP 422: The from.email domain must be verified in your account to send emails. #MS42207
-```
+Open the site in a real browser and submit the form. It cannot be tested with
+`curl` or a headless browser — the Web3Forms API sits behind Cloudflare bot
+protection and rejects non-browser clients with a 403 challenge page.
 
-One-time setup for `acssplants.pt`:
+If a submission fails, the browser console logs the reason (the handler logs
+`Envio do formulário falhou: …`). A message about the access key means the key is
+wrong or unconfirmed; check the address was verified when the key was created.
 
-1. MailerSend dashboard → **Domains** → **Add domain** → `acssplants.pt`.
-2. Copy the DNS records it shows (SPF `TXT`, DKIM `CNAME`/`TXT`, and the Return-Path
-   `CNAME`) into the DNS zone for `acssplants.pt` at the registrar.
-3. Back in MailerSend, press **Verify**. Propagation is usually minutes but can take
-   a few hours.
-4. Once the domain shows as verified, the contact form works with no code change —
-   `.env` already points at `site@acssplants.pt`.
+### Limits
 
-The recipient (`MAIL_TO`) does not need verifying, only the sender.
+The Web3Forms free tier allows roughly 250 submissions per month. Check the current
+limit if enquiry volume grows.
 
-## Test the contact endpoint
+## Deliverability note
 
-With the server running:
-
-```bash
-npm run test:contact              # defaults to http://localhost:3000
-BASE_URL=https://www.acssplants.pt npm run test:contact
-```
-
-It posts a sample enquiry to `/api/contact` and reports what came back. A `422 /
-#MS42207` in the server log means step 3 above is still pending.
-
-## Deployment note
-
-`index.html` is static, but `/api/contact` needs `server.js` running as a Node
-process — static hosting alone will make the form return 404 and show the error
-box. Host both from the same origin, or set `ALLOWED_ORIGIN` to the site's URL if
-the API runs on a separate domain.
+Web3Forms sends from its own infrastructure, so nothing needs to be verified to get
+started. If ACSS later wants enquiry mail to come from `site@acssplants.pt` — better
+branding and better deliverability — that requires verifying the domain by DNS with
+an email provider (SPF, DKIM, Return-Path records). `server.js` in this repo is a
+previous MailerSend-based implementation kept for that eventuality; it is no longer
+used by the site and can be deleted along with `test-contact.js`, `package.json`,
+`.env` and `.env.example` once you are happy with the Web3Forms setup.
