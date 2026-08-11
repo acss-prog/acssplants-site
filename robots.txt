@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.acssplants.pt/sitemap.xml
+Sitemap: https://acss-plants.com/sitemap.xml
