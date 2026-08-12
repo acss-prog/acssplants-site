@@ -427,7 +427,7 @@
   .distinction-section{position:relative;background:var(--paper);overflow:hidden}
   .distinction-section::after{content:'ACSS';position:absolute;right:-.04em;top:10%;font:600 clamp(9rem,22vw,22rem)/1 var(--serif);letter-spacing:-.08em;color:rgba(9,46,37,.025);pointer-events:none}
   .distinction-section .container{position:relative;z-index:1}
-  .distinction-section h2{max-width:8ch!important}
+  .distinction-section h2{max-width:none!important}
   .distinction-section .grid-3{gap:16px;background:transparent;border:0;border-radius:12px;overflow:visible}
   .distinction-section .card{position:relative;min-height:340px;padding:110px clamp(24px,2.4vw,32px) 28px;display:flex;flex-direction:column;justify-content:flex-start;background:#fff;border:0;overflow:hidden;isolation:isolate}
   .distinction-section .card::before{display:none}
@@ -439,7 +439,7 @@
   .distinction-section .card:hover h3{color:var(--forest)}
   .distinction-section .card:hover p{color:rgba(9,46,37,.75)}
   .farms-section{position:relative}
-  .farms-section h2{max-width:16ch!important;margin-bottom:18px!important}
+  .farms-section h2{max-width:none!important;margin-bottom:18px!important}
   .farms-section .farms-intro{max-width:72ch;margin:0 0 clamp(28px,4vw,42px);color:var(--muted);font-size:clamp(.98rem,1.25vw,1.1rem);line-height:1.65;text-wrap:pretty}
   .farms-section .grid-2{gap:20px;background:transparent;border:0;border-radius:0;overflow:visible}
   .farms-section .grid-2>a{display:block;position:relative}
@@ -488,13 +488,14 @@
   #page-onde-estamos .map-location-section{padding:var(--section-space) 0!important;background:var(--paper)}
   #page-onde-estamos .location-layout{display:grid;grid-template-columns:minmax(330px,.74fr) minmax(0,1.26fr);gap:16px;align-items:stretch}
   #page-onde-estamos .location-list{display:grid;height:clamp(620px,68vh,650px);min-height:620px;grid-template-rows:repeat(2,minmax(0,1fr));gap:16px}
-  #page-onde-estamos .loc-card{position:relative;display:grid;min-height:0;grid-template-rows:auto auto minmax(0,1fr) auto auto;padding:28px;background:#fff;border:0}
+  #page-onde-estamos .loc-card{position:relative;display:flex;flex-direction:column;min-height:0;padding:28px;background:#fff;border:0}
   #page-onde-estamos .loc-card .location-kicker{display:flex;align-items:center;gap:9px;margin:0 0 14px;color:var(--muted);font-size:.64rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
   #page-onde-estamos .loc-card .pin{width:10px;height:10px;border-radius:50%;background:var(--forest);color:transparent;flex:0 0 auto}
   #page-onde-estamos .loc-card.pin-amora .pin{background:#8f2441}
   #page-onde-estamos .loc-card h3{min-height:0;margin:0 0 14px;color:var(--forest);font-size:clamp(1.35rem,1.8vw,1.75rem)}
-  #page-onde-estamos .loc-card .location-description{min-height:0;margin:0 0 16px;color:var(--muted);font-size:.78rem;line-height:1.45}
-  #page-onde-estamos .loc-card address{margin:0 0 22px;color:var(--forest);font-size:.76rem;font-style:normal;line-height:1.45}
+  #page-onde-estamos .loc-card .location-description{min-height:0;margin:0 0 28px;color:var(--muted);font-size:.78rem;line-height:1.45}
+  #page-onde-estamos .loc-card address{margin:auto 0 22px;color:var(--forest);font-size:.76rem;font-style:normal;line-height:1.45}
+  #page-onde-estamos .loc-card.pin-amora .location-description{margin-bottom:52px}
   #page-onde-estamos .location-actions{display:flex;align-items:center;gap:16px;margin:0;flex-wrap:wrap}
   #page-onde-estamos .location-actions .btn{padding:10px 17px;border:0;background:var(--forest);color:#fff;font-size:.69rem}
   #page-onde-estamos .location-actions .btn:hover{background:#043d2f;transform:translateY(-2px)}
@@ -589,7 +590,7 @@
   #page-quem-somos .about-team-grid h3{align-self:end;margin:0 0 7px!important;color:var(--forest);font-size:clamp(1.2rem,1.65vw,1.55rem);line-height:1.05}
   #page-quem-somos .about-team-grid .role{color:#8f2441;font-size:.67rem;line-height:1.45;letter-spacing:.07em}
   #page-quem-somos .about-team-grid p{grid-column:1/-1;margin-top:24px!important;padding-top:20px;border-top:1px solid var(--line);color:var(--muted)!important;font-size:.84rem!important;line-height:1.66}
-  #page-quem-somos>section:nth-of-type(3){position:relative;padding:var(--section-space) 0!important;background:var(--forest);overflow:hidden}
+  #page-quem-somos>section:nth-of-type(3){position:relative;padding:var(--section-space) 0!important;background:#044734;overflow:hidden}
   #page-quem-somos>section:nth-of-type(3)::after{content:'ACSS';position:absolute;right:-.04em;top:-.16em;font:700 clamp(11rem,26vw,27rem)/1 var(--serif);letter-spacing:-.08em;color:rgba(255,255,255,.025);pointer-events:none}
   #page-quem-somos>section:nth-of-type(3) .container{position:relative;z-index:1}
   #page-quem-somos>section:nth-of-type(3) .eyebrow{color:var(--leaf)}
@@ -909,7 +910,7 @@
   <section class="block farms-section" style="padding-top:0">
     <div class="container">
       <span class="eyebrow" data-i18n="home.camposEyebrow">As nossas quintas</span>
-      <h2 style="font-size:2rem;margin-bottom:34px;max-width:16ch" data-i18n="home.camposTitle">Duas quintas, um mesmo padrão de excelência</h2>
+      <h2 style="font-size:2rem;margin-bottom:34px" data-i18n="home.camposTitle">Duas quintas, um mesmo padrão de excelência</h2>
       <p class="farms-intro" data-i18n="campos.lead">Produzimos em duas localizações complementares no Norte de Portugal: junto ao litoral atlântico em Vila do Conde e no interior do Vale do Sousa em Penafiel. Conheça cada campo em detalhe.</p>
       <div class="grid-2">
         <a href="#/pt/campos/parada" data-route="/campos/parada" style="text-decoration:none">
@@ -1713,7 +1714,7 @@ const I18N = {
 
   'pilar1.title':{pt:'Inovação',en:'Innovation',fr:'Innovation'},
   'pilar1.text':{pt:'Focamos o nosso processo nas mais recentes técnicas e com o suporte técnico experiente. Investimos anualmente em inovação e em parcerias que nos permitam melhorar a qualidade final das nossas plantas e a um custo controlado.',en:'We focus our process on the latest techniques, backed by experienced technical support. We invest every year in innovation and in partnerships that let us improve the final quality of our plants at a controlled cost.',fr:'Nous concentrons notre processus sur les techniques les plus récentes, avec le soutien d\'une expertise technique expérimentée. Nous investissons chaque année dans l\'innovation et dans des partenariats qui nous permettent d\'améliorer la qualité finale de nos plants, à un coût maîtrisé.'},
-  'pilar2.title':{pt:'Foco no Cliente',en:'Client Centred',fr:'Orientés Client'},
+  'pilar2.title':{pt:'Foco no Cliente',en:'Client Centric',fr:'Orientés Client'},
   'pilar2.text':{pt:'A nossa abordagem é pessoal e transparente. Cada cliente é único, e ajustamos a nossa produção às especificidades e necessidades de cada um — parcerias de longo prazo assentes em confiança e rigor.',en:'Our approach is personal and transparent. Every client is unique, and we tailor our production to each one\'s specific needs — long-term partnerships built on trust and rigour.',fr:'Notre approche est personnelle et transparente. Chaque client est unique, et nous adaptons notre production aux spécificités et aux besoins de chacun — des partenariats durables fondés sur la confiance et la rigueur.'},
   'pilar3.title':{pt:'Qualidade',en:'Quality',fr:'Qualité'},
   'pilar3.text':{pt:'Produzimos plantas com a máxima qualidade, ajustada às características específicas de cada variedade. Cumprimos rigorosamente as normas das diversas certificações existentes, num processo que alia exigência técnica e respeito pela Natureza.',en:'We produce plants of the highest quality, tailored to the specific characteristics of each variety. We rigorously comply with the standards of the various existing certifications, in a process that combines technical rigour with respect for Nature.',fr:'Nous produisons des plants de la plus haute qualité, adaptés aux caractéristiques spécifiques de chaque variété. Nous respectons rigoureusement les normes des différentes certifications existantes, dans un processus alliant exigence technique et respect de la Nature.'},
